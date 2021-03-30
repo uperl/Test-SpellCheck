@@ -15,6 +15,7 @@ $modules{$_} = $_ for qw(
   Path::Tiny
   Pod::Simple::Words
   Test2::V0
+  Test::SpellCheck::Plugin::Lang::EN::US
   YAML
 );
 
