@@ -29,12 +29,6 @@ sub new ($class)
   }, $class;
 }
 
-=head1 METHODS
-
-=head2 stream
-
-=cut
-
 sub stream ($self, $filename, $callback)
 {
   foreach my $plugin ($self->{plugins}->@*)

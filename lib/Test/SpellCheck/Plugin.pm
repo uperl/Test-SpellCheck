@@ -52,6 +52,17 @@ test.  These files should be readable by L<Text::Hunspell::FFI>.  Only one plugi
 time my define a primary dictionary, so if you are combining several plugins, make sure
 that only one implements this method.
 
+=head2 dictionary
+
+ sub dictionary ($self)
+ {
+   ...
+   return @dic;
+ }
+
+This method returns a list of one or more additional dictionaries.  These are useful
+for jargon which doesn't belong in the main human language dictionary.
+
 =head2 stream
 
  sub stream ($self, $filename, $callback)
