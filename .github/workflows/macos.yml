@@ -51,7 +51,7 @@ jobs:
 
       - name: Install Static Dependencies
         run: |
-          cpanm -n https://dist.wdlabs.com/Pod-Simple-Words-0.01.tar.gz
+          cpanm -n https://dist.wdlabs.com/Pod-Simple-Words-0.02.tar.gz
           cpanm -n https://dist.wdlabs.com/Test-SpellCheck-Plugin-Lang-EN-US-0.01.tar.gz
           cpanm -n Dist::Zilla
           dzil authordeps --missing | cpanm -n

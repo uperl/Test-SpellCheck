@@ -1,10 +1,11 @@
-460
+464
 ACL
 AUTOLOAD
 ActivePerl
 ActiveState
 AnyEvent
 CLI
+CPAN
 DBI
 DNS
 DSL
@@ -26,6 +27,7 @@ RDBM
 SHA
 SMTP
 TIMTOWTDI
+TODO
 UNITCHECK
 Unixen
 VMS
@@ -426,6 +428,7 @@ sprintf
 sqrt
 srand
 stdout
+stopword/MS
 stringify
 stty
 substr
@@ -453,6 +456,7 @@ unlink
 unpairs
 unshift
 unweaken
+url
 utime
 vec
 waitpid

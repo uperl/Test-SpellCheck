@@ -68,7 +68,7 @@ for jargon which doesn't belong in the main human language dictionary.
  sub stream ($self, $filename, $callback)
  {
    ...
-   $callback->( $type, $event_filename, $linenumber, $text);
+   $callback->( $type, $event_filename, $line_number, $text);
    ...
  }
 
@@ -76,7 +76,7 @@ The stream method parses the input file C<$filename> to find events.  For each e
 it calls the C<$callback> with exactly four values.  The C<$type> is one of the event
 types listed below.  The C<$event_filename> is the filename the event was found in.  This
 will often be the same as C<$filename>, but it could be other file if the source file
-that you are reading supports including other source files.  The C<$linenumber> is the
+that you are reading supports including other source files.  The C<$line_number> is the
 line that event was found at.  The C<$text> depends on the C<$type>.
 
 =over 4
