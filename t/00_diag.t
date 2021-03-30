@@ -11,6 +11,8 @@ my $post_diag;
 
 $modules{$_} = $_ for qw(
   ExtUtils::MakeMaker
+  File::ShareDir::Dist
+  File::ShareDir::Install
   PPI
   Path::Tiny
   Pod::Simple::Words

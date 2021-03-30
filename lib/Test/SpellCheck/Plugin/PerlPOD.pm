@@ -20,12 +20,6 @@ sub new ($class)
   bless {}, $class;
 }
 
-=head1 METHODS
-
-=head2 stream
-
-=cut
-
 sub stream ($self, $filename, $callback)
 {
   my $parser = Pod::Simple::Words->new;
