@@ -11,7 +11,11 @@ my $post_diag;
 
 $modules{$_} = $_ for qw(
   ExtUtils::MakeMaker
+  PPI
+  Path::Tiny
+  Pod::Simple::Words
   Test2::V0
+  YAML
 );
 
 
