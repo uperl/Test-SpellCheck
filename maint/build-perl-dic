@@ -15,7 +15,7 @@ my $hs = Text::Hunspell::FFI->new(
   Test::SpellCheck::Plugin::Lang::EN::US->new->primary_dictionary,
 );
 
-my @list = grep { !$hs->check($_) } (
+my @list = grep { !$hs->check($_ =~ s!/.*$!!r ) } (
   uniqstr
   @List::Util::EXPORT_OK,
   @Scalar::Util::EXPORT_OK,
@@ -111,6 +111,7 @@ my @list = grep { !$hs->check($_) } (
     css
     crlf
     cpantester
+    CPAN
     CLI
     CGI
     catdir
@@ -131,6 +132,9 @@ my @list = grep { !$hs->check($_) } (
     ActivePerl
     ActiveState
     ACL
+    url
+    TODO
+    stopword/MS
 
     chomp chop chr crypt fc hex index lc lcfirst length oct ord pack q qq reverse rindex sprintf substr tr uc ucfirst y
     m pos qr quotemeta s split study

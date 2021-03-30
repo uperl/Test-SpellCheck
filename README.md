@@ -2,6 +2,14 @@
 
 Check spelling of POD and other documents
 
+# FUNCTIONS
+
+## spell\_check
+
+```
+spell_check
+```
+
 # AUTHOR
 
 Graham Ollis <plicease@cpan.org>

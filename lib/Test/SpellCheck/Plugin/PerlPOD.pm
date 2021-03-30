@@ -24,6 +24,8 @@ sub stream ($self, $filename, $callback)
 {
   my $parser = Pod::Simple::Words->new;
   $parser->callback($callback);
+  # TODO: make this configurable
+  $parser->skip_sections('contributors', 'author', 'copyright and license');
   $parser->parse_file($filename);
   return $self;
 }
