@@ -12,6 +12,8 @@ use Carp qw( croak );
 use PerlX::Maybe;
 use experimental qw( signatures );
 
+our @CARP_NOT = qw( Test::SpellCheck );
+
 # ABSTRACT: Test::SpellCheck plugin for checking spelling in Perl source
 # VERSION
 
