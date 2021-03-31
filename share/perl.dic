@@ -1,4 +1,4 @@
-465
+469
 ACL
 AUTOLOAD
 ActivePerl
@@ -10,6 +10,7 @@ DBI
 DNS
 DSL
 DWIM
+FFI
 FreeBSD
 Getopts
 INIT
@@ -61,6 +62,7 @@ chr
 chroot
 closedir
 cmp
+config
 cpantester
 crlf
 csh
@@ -89,6 +91,7 @@ fc
 fcntl
 fileno
 foreach
+formatter
 formline
 gcc
 ge
@@ -119,6 +122,7 @@ getservent
 getsockname
 getsockopt
 gid
+globbed
 gmake
 gmtime
 goto

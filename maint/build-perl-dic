@@ -136,6 +136,10 @@ my @list = grep { !$hs->check($_ =~ s!/.*$!!r ) } (
     TODO
     stopword/MS
     lang
+    config
+    FFI
+    globbed
+    formatter
 
     chomp chop chr crypt fc hex index lc lcfirst length oct ord pack q qq reverse rindex sprintf substr tr uc ucfirst y
     m pos qr quotemeta s split study

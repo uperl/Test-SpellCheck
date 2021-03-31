@@ -4,11 +4,12 @@ use strict;
 use warnings;
 use 5.026;
 use experimental qw( signatures );
-use Ref::Util qw( is_ref is_blessed_ref );
+use Ref::Util qw( is_ref is_blessed_ref is_plain_arrayref );
 use File::Globstar qw( globstar );
 use Test2::API qw( context );
 use Text::Hunspell::FFI;
 use Carp qw( croak );
+use Module::Load qw( load );
 use base qw( Exporter );
 
 our @EXPORT = qw ( spell_check );
@@ -16,11 +17,106 @@ our @EXPORT = qw ( spell_check );
 # ABSTRACT: Check spelling of POD and other documents
 # VERSION
 
+=head1 SYNOPSIS
+
+ use Test2::V0;
+
+ spell_check 'lib/**/*.pm';
+
+ done_testing;
+
+=head1 DESCRIPTION
+
+ # TODO
+
 =head1 FUNCTIONS
 
 =head2 spell_check
 
+ spell_check \@plugin, $files, $test_name;
+ spell_check $plugin, $files, $test_name;
+ spell_check $files, $test_name;
+ spell_check $files;
+ spell_check;
+
+The C<spell_check> function is configurable by passing a C<$plugin> instance or a plugin
+config specified with C<\@plugin> (see more detail below).  By default C<spell_check> uses
+L<Test::SpellCheck::Plugin::Perl>, which is usually reasonable for most Perl distributions.
+
+The C<$file> argument is a string containing a space separated list of files, which can
+be globbed using L<File::Globstar>.  The default is C<bin/* script/* lib/**/*.pm lib/**/*.pod>
+should find public documentation for most Perl distributions.
+
+The C<$test_name> is an optional test name for the test.
+
+=head3 common recipes
+
+=over 4
+
+=item Check Perl code in a language other than English
+
+ spell_check ['Perl', lang => 'de-de'];
+
+This would load the German language dictionary for Germany, which would mean loading
+C<Test::SpellCheck::Plugin::DE::DE> (if it existed) instead of
+C<Test::SPellCheck::Plugin::EN::US>.
+
+=item Add stop words to just one file
+
+ # TODO
+
+=item Add global stopwords for all files
+
+ # TODO
+
+=item Add a dist-level dictionary
+
+ # TODO
+
+=item Don't spellcheck comments
+
+ # TODO
+
+=item Skip / don't skip POD sections
+
+ # TODO
+
+=back
+
+=head3 plugin spec
+
+You can specify a plugin using the array reference notation (C<\@plugin> from above).
+The first element of this array is the short form of the plugin (that is without the
+C<Test::SpellCheck::Plugin> prefix).  The rest of the elements are passed to the plugin
+constructor.  Most of the time, when you are not using the default plugin you will want
+to combine several plugins to get the right mix, which you can do with
+L<Test::SpellCheck::Plugin::Combo>.  Each argument passed to the combo plugin is itself
+an array reference which specifies a plugin.  For example the default plugin (without any options)
+is basically this:
+
  spell_check
+   ['Combo',
+     ['Lang::EN::US'],
+     ['PerlWords'],
+     ['PerlPOD', skip_sections => ['contributors', 'author', 'copyright and license']],
+     ['PerlComment'],
+   ],
+ ;
+
+If you didn't want to check comments, and didn't want to skip any POD sections, then you
+could explicitly use this:
+
+ spell_check
+   ['Combo',
+     ['Lang::EN::US'],
+     ['PerlWords'],
+     ['PerlPOD', skip_sections => []],
+     ['PerlComment'],
+   ],
+ ;
+
+A full list of common plugins, as well as documentation for writing your own plugins can be
+found at L<Test::SpellCheck::Plugin>.
 
 =cut
 
@@ -36,6 +132,13 @@ sub spell_check
   if(defined $_[0] && is_blessed_ref $_[0])
   {
     $plugin = shift;
+  }
+  elsif(defined $_[0] && is_plain_arrayref $_[0])
+  {
+    my($class, @args) = shift->@*;
+    $class = "Test::SpellCheck::Plugin::$class";
+    load $class;
+    $plugin = $class->new(@args);
   }
   else
   {
@@ -125,7 +228,7 @@ sub spell_check
   {
     my $diag = "Misspelled: $word\n";
     my @suggestions = $hs->suggest($word);
-    $diag .= "  maybe: @suggestions" if @suggestions;
+    $diag .= "  maybe: @suggestions\n" if @suggestions;
     foreach my $loc ($bad_words{$word}->@*)
     {
       my($fn, $ln) = @$loc;
@@ -151,4 +254,47 @@ sub spell_check
 
 1;
 
+=head1 CAVEATS
 
+I am (frankly) somewhat uneasy making US English the default language, and requiring
+non-English and non-US based people explicitly download separate dictionaries.  However,
+English is the most common documentation language for CPAN modules, and I happen to use US
+English in my every-day and technical language, even though I am Australian (and American).
+In the future I may make other language combinations available by default.
+
+=head1 SEE ALSO
+
+=over 4
+
+=item L<Test::SpellCheck::Plugin>
+
+List of common plugins for this module, plus specification for writing your own
+plugins.
+
+=item L<Test::SpellCheck::Plugin::Perl>
+
+The default plugin used by this module.
+
+=item L<Text::Hunspell>
+
+XS based bindings to the Hunspell spelling library.
+
+=item L<Text::Hunspell::FFI>
+
+FFI based bindings to the Hunspell spelling library.
+
+=item L<Pod::Spell>
+
+A formatter for spellchecking POD (used by L<Test::Spelling>
+
+=item L<Pod::Wordlist>
+
+A list of common jargon words used in Perl documentation.
+
+=item L<Test::Spelling>
+
+An older spellchecker for POD.
+
+=back
+
+=cut

@@ -11,6 +11,10 @@ use 5.026;
 
 =over 4
 
+=item L<Test::SpellCheck::Plugin::Combo>
+
+=item L<Test::SpellCheck::Plugin::Lang::EN::US>
+
 =item L<Test::SpellCheck::Plugin::Perl>
 
 =item L<Test::SpellCheck::Plugin::PerlPOD>
