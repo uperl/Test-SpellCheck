@@ -86,9 +86,16 @@ The `$test_name` is an optional test name for the test.
 
 - Don't spellcheck comments
 
+    ```perl
+    spell_check ['Perl', check_comments => 0];
     ```
-    # TODO
-    ```
+
+    By default this module checks the spelling of words in internal comments, since correctly
+    spelled comments is good.  If you prefer to only check the POD and not internal comments,
+    you can set `check_comments` to a false value.
+
+    This module will still check comments in POD verbatim blocks, since those are visible in
+    the POD documentation.
 
 - Skip / don't skip POD sections
 
