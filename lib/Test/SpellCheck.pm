@@ -272,7 +272,8 @@ I am (frankly) somewhat uneasy making US English the default language, and requi
 non-English and non-US based people explicitly download separate dictionaries.  However,
 English is the most common documentation language for CPAN modules, and I happen to use US
 English in my every-day and technical language, even though I am Australian (and American).
-In the future I may make other language combinations available by default.
+In the future I may make other language combinations available by default, or detect an
+appropriate languages based on the locale.
 
 =head1 SEE ALSO
 
