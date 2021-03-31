@@ -8,6 +8,8 @@ use Ref::Util qw( is_plain_arrayref is_blessed_ref is_ref );
 use Carp qw( croak );
 use experimental qw( signatures );
 
+our @CARP_NOT = qw( Test::SpellCheck );
+
 # ABSTRACT: Test::SpellCheck plugin for combining other plugins.
 # VERSION
 
