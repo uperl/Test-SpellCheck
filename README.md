@@ -50,13 +50,27 @@ The `$test_name` is an optional test name for the test.
 
     This would load the German language dictionary for Germany, which would mean loading
     `Test::SpellCheck::Plugin::DE::DE` (if it existed) instead of
-    `Test::SPellCheck::Plugin::EN::US`.
+    [Test::SPellCheck::Plugin::EN::US](https://metacpan.org/pod/Test::SPellCheck::Plugin::EN::US).
 
 - Add stop words to just one file
 
     ```
-    # TODO
+    =for stopwords foo bar baz
     ```
+
+    Stopwords are words that shouldn't be considered misspelled.  You can specify these
+    in your POD using the standard `stopwords` directive.  If you have a lot of stopwords
+    then you may want to use `=begin` and `=end` like so:
+
+    ```
+    =begin stopwords
+
+    foo bar baz
+
+    =end stopwords
+    ```
+
+    Stopwords specified in this way are local to just the one file.
 
 - Add global stopwords for all files
 
