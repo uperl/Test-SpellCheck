@@ -22,6 +22,7 @@ $modules{$_} = $_ for qw(
   Ref::Util
   Test2::API
   Test2::V0
+  Test::Script
   Test::SpellCheck::Plugin::Lang::EN::US
   Text::Hunspell::FFI
   YAML
