@@ -10,6 +10,10 @@ use Path::Tiny qw( path );
 # ABSTRACT: Test::SpellCheck for checking spelling in Perl comments
 # VERSION
 
+=head1 OPTIONS
+
+None.
+
 =head1 CONSTRUCTOR
 
 =head2 new
