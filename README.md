@@ -127,7 +127,6 @@ spell_check
     ['Lang::EN::US'],
     ['PerlWords'],
     ['PerlPOD', skip_sections => []],
-    ['PerlComment'],
   ],
 ;
 ```

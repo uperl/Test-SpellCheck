@@ -123,7 +123,6 @@ could explicitly use this:
      ['Lang::EN::US'],
      ['PerlWords'],
      ['PerlPOD', skip_sections => []],
-     ['PerlComment'],
    ],
  ;
 
