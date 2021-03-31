@@ -140,6 +140,7 @@ my @list = grep { !$hs->check($_ =~ s!/.*$!!r ) } (
     FFI
     globbed
     formatter
+    PODNAME
 
     chomp chop chr crypt fc hex index lc lcfirst length oct ord pack q qq reverse rindex sprintf substr tr uc ucfirst y
     m pos qr quotemeta s split study

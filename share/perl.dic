@@ -1,4 +1,4 @@
-469
+470
 ACL
 AUTOLOAD
 ActivePerl
@@ -23,6 +23,7 @@ OOP
 OpenBSD
 OpenSSH
 OpenVMS
+PODNAME
 POSIX
 RDBM
 SHA
