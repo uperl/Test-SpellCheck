@@ -92,8 +92,20 @@ The `$test_name` is an optional test name for the test.
 
 - Skip / don't skip POD sections
 
+    ```perl
+    # these two are the same:
+    spell_check ['Perl'];
+    spell_check ['Perl', skip_sections => ['contributors', 'author', 'copyright and license']];
     ```
-    # TODO
+
+    By default this module skips the sections `CONTRIBUTORS`, `AUTHOR` and `COPYRIGHT AND LICENSE`
+    since these are often generated automatically and can include a number of names that do
+    not appear in the human language dictionary.  If you prefer you can include these sections,
+    or skip a different subset of sections.
+
+    ```perl
+    spell_check ['Perl', skip_sections => []];
+    spell_check ['Perl', skip_sections => ['contributors', 'see also']];
     ```
 
 ### plugin spec

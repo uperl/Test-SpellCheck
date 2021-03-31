@@ -91,7 +91,17 @@ Stopwords specified in this way are local to just the one file.
 
 =item Skip / don't skip POD sections
 
- # TODO
+ # these two are the same:
+ spell_check ['Perl'];
+ spell_check ['Perl', skip_sections => ['contributors', 'author', 'copyright and license']];
+
+By default this module skips the sections C<CONTRIBUTORS>, C<AUTHOR> and C<COPYRIGHT AND LICENSE>
+since these are often generated automatically and can include a number of names that do
+not appear in the human language dictionary.  If you prefer you can include these sections,
+or skip a different subset of sections.
+
+ spell_check ['Perl', skip_sections => []];
+ spell_check ['Perl', skip_sections => ['contributors', 'see also']];
 
 =back
 
