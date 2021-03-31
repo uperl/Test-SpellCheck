@@ -59,11 +59,23 @@ The C<$test_name> is an optional test name for the test.
 
 This would load the German language dictionary for Germany, which would mean loading
 C<Test::SpellCheck::Plugin::DE::DE> (if it existed) instead of
-C<Test::SPellCheck::Plugin::EN::US>.
+L<Test::SPellCheck::Plugin::EN::US>.
 
 =item Add stop words to just one file
 
- # TODO
+ =for stopwords foo bar baz
+
+Stopwords are words that shouldn't be considered misspelled.  You can specify these
+in your POD using the standard C<stopwords> directive.  If you have a lot of stopwords
+then you may want to use C<=begin> and C<=end> like so:
+
+ =begin stopwords
+
+ foo bar baz
+
+ =end stopwords
+
+Stopwords specified in this way are local to just the one file.
 
 =item Add global stopwords for all files
 
