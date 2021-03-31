@@ -87,7 +87,14 @@ Stopwords specified in this way are local to just the one file.
 
 =item Don't spellcheck comments
 
- # TODO
+ spell_check ['Perl', check_comments => 0];
+
+By default this module checks the spelling of words in internal comments, since correctly
+spelled comments is good.  If you prefer to only check the POD and not internal comments,
+you can set C<check_comments> to a false value.
+
+This module will still check comments in POD verbatim blocks, since those are visible in
+the POD documentation.
 
 =item Skip / don't skip POD sections
 

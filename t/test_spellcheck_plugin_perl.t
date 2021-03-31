@@ -136,6 +136,37 @@ subtest 'lang' => sub {
 
 };
 
+subtest 'do not check comments' => sub {
+
+  my $plugin = Test::SpellCheck::Plugin::Perl->new(
+    check_comments => 0,
+  );
+
+  my $file = file( 'Foo.pm' => <<~'PERL' );
+    say "Hello World"; # foo bar baz
+
+    =head1 DESCRIPTION
+
+    one
+
+    =cut
+    PERL
+
+  my %words;
+
+  $plugin->stream("$file", sub ($type, $fn, $ln, $word) {
+    return unless $type eq 'word';
+    push $words{$word}->@*, [path($fn)->basename,$ln];
+  });
+
+  is
+    \%words,
+    {
+      description => [['Foo.pm', 3]],
+      one         => [['Foo.pm', 5]],
+    },
+  or diag Dump(\%words);
+
+};
+
 done_testing;
-
-

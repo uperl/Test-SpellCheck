@@ -4,7 +4,6 @@ use strict;
 use warnings;
 use 5.026;
 use Module::Load qw( load );
-use Test::SpellCheck::Plugin::PerlComment;
 use Test::SpellCheck::Plugin::PerlPOD;
 use Test::SpellCheck::Plugin::PerlWords;
 use base qw( Test::SpellCheck::Plugin::Combo );
@@ -22,6 +21,8 @@ our @CARP_NOT = qw( Test::SpellCheck );
 =head2 skip_sections
 
 =head2 lang
+
+=head2 check_comments
 
 =head1 CONSTRUCTOR
 
@@ -50,17 +51,21 @@ sub new ($class, %args)
 
   load $lang_class;
 
-  $class->SUPER::new(
+  my @plugins = (
     $lang_class->new,
     Test::SpellCheck::Plugin::PerlWords->new,
-    # we want to do the pod parse first, because
-    # it might have some stop words that we
-    # want to consider for comments.
     Test::SpellCheck::Plugin::PerlPOD->new(
       maybe skip_sections => $args{skip_sections},
     ),
-    Test::SpellCheck::Plugin::PerlComment->new,
   );
+
+  if($args{check_comments} // 1)
+  {
+    require Test::SpellCheck::Plugin::PerlComment;
+    push @plugins, Test::SpellCheck::Plugin::PerlComment->new;
+  }
+
+  $class->SUPER::new(@plugins);
 }
 
 1;
