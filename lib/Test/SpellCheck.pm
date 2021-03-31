@@ -137,9 +137,9 @@ sub spell_check
   my $plugin;
   my @files;
   my $test_name;
-  my @note;
   my @diag;
-  my $hs;
+  my @note;
+  my $spell;
 
   if(defined $_[0] && is_blessed_ref $_[0])
   {
@@ -179,7 +179,7 @@ sub spell_check
   if($plugin->can('primary_dictionary'))
   {
     my($affix, $dic) = $plugin->primary_dictionary;
-    $hs = Text::Hunspell::FFI->new($affix, $dic);
+    $spell = Text::Hunspell::FFI->new($affix, $dic);
     push @note, "using affix file $affix";
     push @note, "using dictionary file $dic";
   }
@@ -192,7 +192,7 @@ sub spell_check
   {
     foreach my $dic ($plugin->dictionary)
     {
-      $hs->add_dic($dic);
+      $spell->add_dic($dic);
       push @note, "using dictionary file $dic";
     }
   }
@@ -209,7 +209,7 @@ sub spell_check
         foreach my $word (split /_/, $word)
         {
           return if $stopwords{$word};
-          return if $hs->check($word);
+          return if $spell->check($word);
           push $bad_words{$word}->@*, [$fn,$ln];
         }
       }
@@ -239,7 +239,7 @@ sub spell_check
   foreach my $word (keys %bad_words)
   {
     my $diag = "Misspelled: $word\n";
-    my @suggestions = $hs->suggest($word);
+    my @suggestions = $spell->suggest($word);
     $diag .= "  maybe: @suggestions\n" if @suggestions;
     foreach my $loc ($bad_words{$word}->@*)
     {
