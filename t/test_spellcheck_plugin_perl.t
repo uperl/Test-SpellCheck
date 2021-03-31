@@ -107,6 +107,35 @@ subtest 'skip-section' => sub {
 
 };
 
+subtest 'lang' => sub {
+
+  local $@ = '';
+  eval { Test::SpellCheck::Plugin::Perl->new( lang => 'foo-bar' ) };
+  like "$@", qr/^bad language: foo-bar/;
+
+  package Test::SpellCheck::Plugin::Lang::AB::CD {
+
+    sub new ($class)
+    {
+      bless {}, $class;
+    }
+
+    sub primary_dictionary ($self)
+    {
+      return ('x','y');
+    }
+
+    $INC{'Test/SpellCheck/Plugin/Lang/AB/CD.pm'} = __FILE__;
+  }
+
+  my $plugin = Test::SpellCheck::Plugin::Perl->new( lang => 'Ab-Cd' );
+  is
+    [$plugin->primary_dictionary],
+    ['x','y'],
+  ;
+
+};
+
 done_testing;
 
 

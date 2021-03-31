@@ -10,6 +10,12 @@ use Ref::Util qw( is_plain_arrayref );
 # ABSTRACT: Test::SpellCheck plugin for checking spelling in POD
 # VERSION
 
+=head1 OPTIONS
+
+=head2 skip_sections
+
+=head2 lang
+
 =head1 CONSTRUCTOR
 
 =head2 new

@@ -1,4 +1,4 @@
-464
+465
 ACL
 AUTOLOAD
 ActivePerl
@@ -133,6 +133,7 @@ isdual
 isvstring
 isweak
 json
+lang
 lc
 lcfirst
 le
