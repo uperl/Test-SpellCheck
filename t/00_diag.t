@@ -16,6 +16,8 @@ $modules{$_} = $_ for qw(
   File::ShareDir::Install
   PPI
   Path::Tiny
+  PerlX::Maybe
+  PerlX::Maybe::XS
   Pod::Simple::Words
   Ref::Util
   Test2::API

@@ -49,7 +49,6 @@ subtest 'basic' => sub {
 subtest 'ignore Perl' => sub {
 
   my $plugin = Test::SpellCheck::Plugin::PerlPOD->new;
-  isa_ok 'Test::SpellCheck::Plugin::PerlPOD';
 
   my $file = file( 'Foo.pm' => <<~'PERL' );
     #!/usr/bin/perl
@@ -85,6 +84,140 @@ subtest 'ignore Perl' => sub {
       two         => [['Foo.pm', 9]],
       three       => [['Foo.pm', 10]],
       four        => [['Foo.pm', 12]],
+    },
+  or diag Dump(\%words);
+
+};
+
+subtest 'skip-section' => sub {
+
+  my $plugin = Test::SpellCheck::Plugin::PerlPOD->new(
+    skip_sections => 'skip1',
+  );
+
+  my $file = file( 'Foo.pod' => <<~'PERL' );
+    =head1 DESCRIPTION
+
+    one
+
+    =head1 SKIP1
+
+    foo bar baz
+
+    =head1 DESCRIPTION
+
+    two
+
+    =cut
+    PERL
+
+  my %words;
+
+  $plugin->stream("$file", sub ($type, $fn, $ln, $word) {
+    return unless $type eq 'word';
+    push $words{$word}->@*, [path($fn)->basename,$ln];
+  });
+
+  is
+    \%words,
+    {
+      description => [['Foo.pod', 1],['Foo.pod',9]],
+      skip1       => [['Foo.pod', 5]],
+      one         => [['Foo.pod', 3]],
+      two         => [['Foo.pod', 11]],
+    },
+  or diag Dump(\%words);
+
+};
+
+subtest 'skip-sections' => sub {
+
+  my $plugin = Test::SpellCheck::Plugin::PerlPOD->new(
+    skip_sections => ['skip1','skip2'],
+  );
+
+  my $file = file( 'Foo.pod' => <<~'PERL' );
+    =head1 DESCRIPTION
+
+    one
+
+    =head1 SKIP1
+
+    foo bar baz
+
+    =head1 DESCRIPTION
+
+    two
+
+    =head1 SKIP2
+
+    foo bar baz
+
+    =head1 DESCRIPTION
+
+    three
+
+    =cut
+    PERL
+
+  my %words;
+
+  $plugin->stream("$file", sub ($type, $fn, $ln, $word) {
+    return unless $type eq 'word';
+    push $words{$word}->@*, [path($fn)->basename,$ln];
+  });
+
+  is
+    \%words,
+    {
+      description => [['Foo.pod', 1],['Foo.pod',9],['Foo.pod',17]],
+      skip1       => [['Foo.pod', 5]],
+      skip2       => [['Foo.pod', 13]],
+      one         => [['Foo.pod', 3]],
+      two         => [['Foo.pod', 11]],
+      three       => [['Foo.pod', 19]],
+    },
+  or diag Dump(\%words);
+
+};
+
+subtest 'no skip-sections' => sub {
+
+  my $plugin = Test::SpellCheck::Plugin::PerlPOD->new(
+    skip_sections => [],
+  );
+
+  my $file = file( 'Foo.pod' => <<~'PERL' );
+    =head1 DESCRIPTION
+
+    one
+
+    =head1 AUTHOR
+
+    two
+
+    =head1 DESCRIPTION
+
+    three
+
+    =cut
+    PERL
+
+  my %words;
+
+  $plugin->stream("$file", sub ($type, $fn, $ln, $word) {
+    return unless $type eq 'word';
+    push $words{$word}->@*, [path($fn)->basename,$ln];
+  });
+
+  is
+    \%words,
+    {
+      description => [['Foo.pod', 1],['Foo.pod',9]],
+      author      => [['Foo.pod', 5]],
+      one         => [['Foo.pod', 3]],
+      two         => [['Foo.pod', 7]],
+      three       => [['Foo.pod', 11]],
     },
   or diag Dump(\%words);
 
