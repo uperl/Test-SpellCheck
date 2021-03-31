@@ -7,6 +7,8 @@ use Test::SpellCheck::Plugin::Lang::EN::US;
 use Test::SpellCheck::Plugin::PerlComment;
 use Test::SpellCheck::Plugin::PerlPOD;
 use Test::SpellCheck::Plugin::PerlWords;
+use base qw( Test::SpellCheck::Plugin::Combo );
+use PerlX::Maybe;
 use experimental qw( signatures );
 
 # ABSTRACT: Test::SpellCheck plugin for checking spelling in Perl source
@@ -18,47 +20,19 @@ use experimental qw( signatures );
 
 =cut
 
-sub new ($class)
+sub new ($class, %args)
 {
-  bless {
-    plugins => [
-      Test::SpellCheck::Plugin::Lang::EN::US->new,
-      Test::SpellCheck::Plugin::PerlWords->new,
-      # we want to do the pod parse first, because
-      # it might have some stop words that we
-      # want to consider for comments.
-      Test::SpellCheck::Plugin::PerlPOD->new,
-      Test::SpellCheck::Plugin::PerlComment->new,
-    ],
-  }, $class;
-}
-
-sub primary_dictionary ($self)
-{
-  foreach my $plugin ($self->{plugins}->@*)
-  {
-    # TODO: make sure we don't have more than one.
-    return $plugin->primary_dictionary if $plugin->can('primary_dictionary');
-  }
-}
-
-sub dictionary ($self)
-{
-  my @dic;
-  foreach my $plugin ($self->{plugins}->@*)
-  {
-    push @dic, $plugin->dictionary if $plugin->can('dictionary');
-  }
-  return @dic;
-}
-
-sub stream ($self, $filename, $callback)
-{
-  foreach my $plugin ($self->{plugins}->@*)
-  {
-    $plugin->stream($filename, $callback) if $plugin->can('stream');
-  }
-  return $self;
+  $class->SUPER::new(
+    Test::SpellCheck::Plugin::Lang::EN::US->new,
+    Test::SpellCheck::Plugin::PerlWords->new,
+    # we want to do the pod parse first, because
+    # it might have some stop words that we
+    # want to consider for comments.
+    Test::SpellCheck::Plugin::PerlPOD->new(
+      maybe skip_sections => $args{skip_sections},
+    ),
+    Test::SpellCheck::Plugin::PerlComment->new,
+  );
 }
 
 1;
