@@ -1,4 +1,4 @@
-473
+476
 ACL
 AUTOLOAD
 ActivePerl
@@ -32,6 +32,7 @@ SMTP
 TIMTOWTDI
 TODO
 UNITCHECK
+UTF
 Unixen
 VMS
 YAML
@@ -43,6 +44,7 @@ __LINE__
 __PACKAGE__
 __SUB__
 atan2
+autogenerate/CAVNGSD
 autovivify
 awk
 backreference
@@ -466,6 +468,7 @@ unpairs
 unshift
 unweaken
 url
+utf
 utime
 vec
 waitpid

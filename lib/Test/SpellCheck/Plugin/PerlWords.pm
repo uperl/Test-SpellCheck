@@ -10,6 +10,20 @@ use Path::Tiny qw( path );
 # ABSTRACT: Test::SpellCheck plugin that adds Perl jargon words
 # VERSION
 
+=head1 SYNOPSIS
+
+ spell_check ['PerlWords'];
+
+Or from C<spellcheck.ini>:
+
+ [PerlWords]
+
+=head1 DESCRIPTION
+
+This plugin adds a number of Perl jargon words like "autovivify" and C<gethostbyaddr>
+as an additional dictionary.  This means they are potential suggestions as well as
+not considered misspellings on their own.
+
 =head1 OPTIONS
 
 None.
@@ -17,6 +31,10 @@ None.
 =head1 CONSTRUCTOR
 
 =head2 new
+
+ my $plugin = Test::SpellCheck::Plugin::PerlWords->new(%options);
+
+This creates a new instance of the plugin.
 
 =cut
 
@@ -35,3 +53,13 @@ sub dictionary ($self)
 }
 
 1;
+
+=head1 SEE ALSO
+
+=over 4
+
+=item L<Test::SpellCheck>
+
+=item L<Test::SpellCheck::Plugin>
+
+=back

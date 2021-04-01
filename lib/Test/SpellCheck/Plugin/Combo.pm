@@ -13,8 +13,6 @@ our @CARP_NOT = qw( Test::SpellCheck );
 # ABSTRACT: Test::SpellCheck plugin for combining other plugins.
 # VERSION
 
-=for stopwords spellcheck.ini
-
 =head1 SYNOPSIS
 
 From your test file:

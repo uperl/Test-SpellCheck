@@ -10,15 +10,37 @@ use Ref::Util qw( is_plain_arrayref );
 # ABSTRACT: Test::SpellCheck plugin for checking spelling in POD
 # VERSION
 
+=head1 SYNOPSIS
+
+ # these are the default options
+ spell_check [PerlPOD, skip_sections => ['contributors', 'author', 'copyright and license']];
+
+Or from C<spellcheck.ini>:
+
+ [PerlPOD]
+ skip_sections = contributors
+ skip_sections = author
+ skip_sections = copyright and license
+
+=head1 DESCRIPTION
+
+This plugin adds checking of POD for spelling errors.  It will also check for POD syntax errors.
+
 =head1 OPTIONS
 
 =head2 skip_sections
 
-=head2 lang
+You can skip sections, which is typically useful for "author" or "copyright and license" sections,
+since these are often generated and contain a number of names.
 
 =head1 CONSTRUCTOR
 
 =head2 new
+
+ my $plugin = Test::SpellCheck::Plugin::PerlPOD->new(%options);
+
+This creates a new instance of the plugin.  Any of the options documented above
+can be passed into the constructor.
 
 =cut
 
@@ -51,4 +73,12 @@ sub stream ($self, $filename, $callback)
 
 1;
 
+=head1 SEE ALSO
 
+=over 4
+
+=item L<Test::SpellCheck>
+
+=item L<Test::SpellCheck::Plugin>
+
+=back

@@ -9,6 +9,18 @@ use experimental qw( signatures );
 # ABSTRACT: Test::SpellCheck plugin for checking spelling in Perl comments
 # VERSION
 
+=head1 SYNOPSIS
+
+ spell_check ['PerlComments'];
+
+Or from C<spellcheck.ini>:
+
+ [PerlComments]
+
+=head1 DESCRIPTION
+
+This plugin adds checking of Perl comments.
+
 =head1 OPTIONS
 
 None.
@@ -16,6 +28,10 @@ None.
 =head1 CONSTRUCTOR
 
 =head2 new
+
+ my $plugin = Test::SpellCheck::Plugin::PerlComment->new;
+
+This creates a new instance of the plugin.
 
 =cut
 
@@ -55,4 +71,12 @@ sub stream ($self, $filename, $callback)
 
 1;
 
+=head1 SEE ALSO
 
+=over 4
+
+=item L<Test::SpellCheck>
+
+=item L<Test::SpellCheck::Plugin>
+
+=back
