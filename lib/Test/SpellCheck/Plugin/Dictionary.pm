@@ -6,7 +6,7 @@ use 5.026;
 use experimental qw( signatures );
 use Carp qw( croak );
 
-# ABSTRACT: Test::SpellCheck for checking spelling in Perl comments
+# ABSTRACT: Test::SpellCheck for adding additional dictionaries
 # VERSION
 
 =head1 OPTIONS

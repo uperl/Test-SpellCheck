@@ -134,6 +134,12 @@ subtest 'lang' => sub {
     ['x','y'],
   ;
 
+  $plugin = Test::SpellCheck::Plugin::Perl->new( lang => [__FILE__,__FILE__] );
+  is
+    [$plugin->primary_dictionary],
+    [__FILE__,__FILE__],
+  ;
+
 };
 
 subtest 'do not check comments' => sub {

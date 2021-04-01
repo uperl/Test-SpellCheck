@@ -143,6 +143,7 @@ my @list = grep { !$hs->check($_ =~ s!/.*$!!r ) } (
     PODNAME
     INI
     ini
+    filesystem/MS
 
     chomp chop chr crypt fc hex index lc lcfirst length oct ord pack q qq reverse rindex sprintf substr tr uc ucfirst y
     m pos qr quotemeta s split study
