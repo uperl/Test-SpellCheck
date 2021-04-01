@@ -17,10 +17,12 @@ $ENV{PERL_FILE_SHAREDIR_DIST} = "Test-SpellCheck=share";
 
 if(-f 'spellcheck.ini')
 {
+  local $Test::SpellCheck::VERBOSE = 1;
   spell_check_ini;
 }
 else
 {
+  local $Test::SpellCheck::VERBOSE = 1;
   spell_check;
 }
 done_testing;
