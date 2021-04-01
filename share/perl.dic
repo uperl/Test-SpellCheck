@@ -1,4 +1,4 @@
-470
+472
 ACL
 AUTOLOAD
 ActivePerl
@@ -13,6 +13,7 @@ DWIM
 FFI
 FreeBSD
 Getopts
+INI
 INIT
 IPv4
 IPv6
@@ -131,6 +132,7 @@ grof
 gz
 gzip
 httpd
+ini
 inode
 inplace
 invocant

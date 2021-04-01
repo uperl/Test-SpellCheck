@@ -26,7 +26,6 @@ sub new ($class, %args)
 {
   my $skip_sections;
 
-  $DB::single = 1;
   if(defined $args{skip_sections})
   {
     $skip_sections = is_plain_arrayref $args{skip_sections} ? [$args{skip_sections}->@*] : [$args{skip_sections}];
@@ -45,7 +44,6 @@ sub stream ($self, $filename, $callback)
 {
   my $parser = Pod::Simple::Words->new;
   $parser->callback($callback);
-  $DB::single = 1;
   $parser->skip_sections($self->{skip_sections}->@*);
   $parser->parse_file($filename);
   return $self;

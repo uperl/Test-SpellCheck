@@ -58,6 +58,8 @@ sub primary_dictionary ($self)
     # TODO: make sure we don't have more than one.
     return $plugin->primary_dictionary if $plugin->can('primary_dictionary');
   }
+  # TODO: intercept can so that we don't get here.
+  croak "no primary dictionary for this combo";
 }
 
 sub dictionary ($self)

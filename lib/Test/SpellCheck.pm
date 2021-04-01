@@ -12,17 +12,19 @@ use Carp qw( croak );
 use Module::Load qw( load );
 use base qw( Exporter );
 
-our @EXPORT = qw ( spell_check );
+our @EXPORT = qw ( spell_check spell_check_ini );
 
 # ABSTRACT: Check spelling of POD and other documents
 # VERSION
 
+=for stopwords spellcheck.ini
+
 =head1 SYNOPSIS
 
  use Test2::V0;
-
+ 
  spell_check 'lib/**/*.pm';
-
+ 
  done_testing;
 
 =head1 DESCRIPTION
@@ -57,6 +59,11 @@ The C<$test_name> is an optional test name for the test.
 
  spell_check ['Perl', lang => 'de-de'];
 
+Or in your C<spellcheck.ini> file:
+
+ [Perl]
+ lang = de-de
+
 This would load the German language dictionary for Germany, which would mean loading
 C<Test::SpellCheck::Plugin::DE::DE> (if it existed) instead of
 L<Test::SPellCheck::Plugin::EN::US>.
@@ -70,9 +77,9 @@ in your POD using the standard C<stopwords> directive.  If you have a lot of sto
 then you may want to use C<=begin> and C<=end> like so:
 
  =begin stopwords
-
+ 
  foo bar baz
-
+ 
  =end stopwords
 
 Stopwords specified in this way are local to just the one file.
@@ -88,6 +95,11 @@ Stopwords specified in this way are local to just the one file.
 =item Don't spellcheck comments
 
  spell_check ['Perl', check_comments => 0];
+
+Or in your C<spellcheck.ini> file:
+
+ [Perl]
+ check_comments = 0
 
 By default this module checks the spelling of words in internal comments, since correctly
 spelled comments is good.  If you prefer to only check the POD and not internal comments,
@@ -109,6 +121,17 @@ or skip a different subset of sections.
 
  spell_check ['Perl', skip_sections => []];
  spell_check ['Perl', skip_sections => ['contributors', 'see also']];
+
+In your C<spellcheck.ini> file:
+
+ [Perl]
+ skip_sections =
+
+or with different sections:
+
+ [Perl]
+ skip_sections = contributors
+ skip_sections = see also
 
 =back
 
@@ -148,11 +171,11 @@ found at L<Test::SpellCheck::Plugin>.
 
 =cut
 
+sub _default_file { 'bin/* script/* lib/**/*.pm lib/**/*.pod' }
+
 sub spell_check
 {
   my $plugin;
-  my @files;
-  my $test_name;
   my @diag;
   my @note;
   my $spell;
@@ -174,23 +197,8 @@ sub spell_check
     $plugin = Test::SpellCheck::Plugin::Perl->new;
   }
 
-  if(defined $_[0] && !is_ref $_[0])
-  {
-    @files = sort map { globstar $_ } split /\s+/, shift;
-  }
-  else
-  {
-    @files = sort map { globstar $_ } split /\s+/, 'bin/* script/* lib/**/*.pm lib/**/*.pod';
-  }
-
-  if(defined $_[0] && !is_ref $_[0])
-  {
-    $test_name = shift;
-  }
-  else
-  {
-    $test_name = "spell check";
-  }
+  my @files = sort map { globstar $_ } split(/\s+/, shift // _default_file());
+  my $test_name = shift // 'spell check';
 
   if($plugin->can('primary_dictionary'))
   {
@@ -278,6 +286,75 @@ sub spell_check
   $ctx->release;
 
   return !scalar @diag;
+}
+
+=head2 spell_check_ini
+
+ spell_check_ini $filename, $test_name;
+ spell_check_ini $filename;
+ spell_check_ini;
+
+This test works like C<spell_check> above, but the configuration is stored
+in an C<.ini> file (C<spellcheck.ini> by default).  In the main section
+you can specify one or more C<file> fields (which can be globbed).  Then
+each section specifies a plugin.  If you don't specify any plugins, then
+the default plugin will be used.  This is roughly equivalent to the default:
+
+ ; spellcheck.ini
+ file = bin/*
+ file = script/*
+ file = lib/**/*.pm
+ file = lib/**/*.pod
+
+ [Perl]
+ lang           = en-us
+ check_comments = 1
+ skip_sections  = contributors
+ skip_sections  = author
+ skip_sections  = copyright and license
+
+The intent of putting the configuration is to separate the config from
+the test file, which can be useful in situations where the test file
+is generated, as is common when using L<Dist::Zilla>.
+
+=cut
+
+sub spell_check_ini ($filename='spellcheck.ini', $test_name=undef)
+{
+  require Test::SpellCheck::INI;
+  my @config = Test::SpellCheck::INI->read_file($filename)->@*;
+  my $root = shift @config;
+  shift @$root;
+  $root = { @$root };
+  my $file;
+  if(defined $root->{file})
+  {
+    if(is_ref $root->{file})
+    {
+      $file = join(' ', $root->{file}->@*);
+    }
+    else
+    {
+      $file = $root->{file};
+    }
+  }
+  else
+  {
+  }
+  my @plugin;
+  if(@config == 0)
+  {
+    # do nothing
+  }
+  elsif(@config == 1)
+  {
+    @plugin = @config;
+  }
+  else
+  {
+    @plugin = ([Combo => @config]);
+  }
+  spell_check @plugin, $file, $test_name;
 }
 
 1;

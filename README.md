@@ -48,6 +48,13 @@ The `$test_name` is an optional test name for the test.
     spell_check ['Perl', lang => 'de-de'];
     ```
 
+    Or in your `spellcheck.ini` file:
+
+    ```
+    [Perl]
+    lang = de-de
+    ```
+
     This would load the German language dictionary for Germany, which would mean loading
     `Test::SpellCheck::Plugin::DE::DE` (if it existed) instead of
     [Test::SPellCheck::Plugin::EN::US](https://metacpan.org/pod/Test::SPellCheck::Plugin::EN::US).
@@ -90,6 +97,13 @@ The `$test_name` is an optional test name for the test.
     spell_check ['Perl', check_comments => 0];
     ```
 
+    Or in your `spellcheck.ini` file:
+
+    ```
+    [Perl]
+    check_comments = 0
+    ```
+
     By default this module checks the spelling of words in internal comments, since correctly
     spelled comments is good.  If you prefer to only check the POD and not internal comments,
     you can set `check_comments` to a false value.
@@ -113,6 +127,21 @@ The `$test_name` is an optional test name for the test.
     ```perl
     spell_check ['Perl', skip_sections => []];
     spell_check ['Perl', skip_sections => ['contributors', 'see also']];
+    ```
+
+    In your `spellcheck.ini` file:
+
+    ```
+    [Perl]
+    skip_sections =
+    ```
+
+    or with different sections:
+
+    ```
+    [Perl]
+    skip_sections = contributors
+    skip_sections = see also
     ```
 
 ### plugin spec
@@ -152,6 +181,39 @@ spell_check
 
 A full list of common plugins, as well as documentation for writing your own plugins can be
 found at [Test::SpellCheck::Plugin](https://metacpan.org/pod/Test::SpellCheck::Plugin).
+
+## spell\_check\_ini
+
+```
+spell_check_ini $filename, $test_name;
+spell_check_ini $filename;
+spell_check_ini;
+```
+
+This test works like `spell_check` above, but the configuration is stored
+in an `.ini` file (`spellcheck.ini` by default).  In the main section
+you can specify one or more `file` fields (which can be globbed).  Then
+each section specifies a plugin.  If you don't specify any plugins, then
+the default plugin will be used.  This is roughly equivalent to the default:
+
+```
+; spellcheck.ini
+file = bin/*
+file = script/*
+file = lib/**/*.pm
+file = lib/**/*.pod
+
+[Perl]
+lang           = en-us
+check_comments = 1
+skip_sections  = contributors
+skip_sections  = author
+skip_sections  = copyright and license
+```
+
+The intent of putting the configuration is to separate the config from
+the test file, which can be useful in situations where the test file
+is generated, as is common when using [Dist::Zilla](https://metacpan.org/pod/Dist::Zilla).
 
 # CAVEATS
 
