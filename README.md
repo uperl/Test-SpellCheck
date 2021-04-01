@@ -14,9 +14,89 @@ done_testing;
 
 # DESCRIPTION
 
-```
-# TODO
-```
+This module is for checking the spelling of program language documentation.  It has built
+in support for Perl (naturally), but provides a plugin API system which should allow it to
+support other languages in the future.  It uses Hunspell at its core.
+
+But why, you ask, when [Test::Spelling](https://metacpan.org/pod/Test::Spelling) exists?  Here briefly are some advantages and
+disadvantages of this project relative to the older tester.
+
+- "One true" spelling library and dictionary
+
+    [Test::Spelling](https://metacpan.org/pod/Test::Spelling) is quite flexible in the spell checker that it uses under the covers,
+    which is admirable in that it will work out of the box in a lot of places as long as there
+    is a spell checker available.  However this makes it less reliable and consistent.
+    This module instead always uses Hunspell (via [Alien::Hunspell](https://metacpan.org/pod/Alien::Hunspell) and [Text::Hunspell::FFI](https://metacpan.org/pod/Text::Hunspell::FFI)),
+    and it has a default human language dictionary (which is configurable).  This makes
+    it easier to rely on the results of this module, and it means you don't have to add
+    stopwords for multiple spell checkers if you develop on multiple platforms with
+    different checkers.  The disadvantage of all this is that the install process can be
+    longer because it will build Hunspell if you don't have it installed, and it won't use
+    the system human language dictionaries.
+
+- More accurate word splitting
+
+    We get this from [Pod::Simple::Words](https://metacpan.org/pod/Pod::Simple::Words), which uses `\b{wb}` to split words instead of
+    `\b`.  This does also mean that Perls older than 5.22 will never be supported by
+    this module or by [Pod::Simple::Words](https://metacpan.org/pod/Pod::Simple::Words), which could be construed as either an advantage
+    or disadvantage depending on your deprecation politics.
+
+- Doesn't have to be for Perl only
+
+    The initial implementation is for Perl only, but the [plugin](https://metacpan.org/pod/Test::SpellCheck::Plugin)
+    architecture is designed to be usable for other languages and technologies.
+
+- Makes suggestions
+
+    This module will suggest corrections to words that it finds are misspelled.
+
+- Groups misspelled
+
+    If the same misspelling exists in multiple locations, it will be reported once for
+    each word, along with each location, including the line number.  I find this easier
+    to manage when making corrections, especially if the appropriate action is to update
+    a dist-level dictionary or add a stopword.
+
+- Can leverage Hunspell tech
+
+    You can write your own Hunspell dictionaries, which allows you to use their affix rules
+    and for [Test::SpellCheck](https://metacpan.org/pod/Test::SpellCheck) to suggest words from your dictionaries.
+
+- Checks Perl comments
+
+    This module will check the spelling of Perl comments in POD verbatim blocks, and private
+    comments inside your scripts and modules.  (The latter can be be turned off, if you
+    prefer not to check private comments).  My feeling is that these are both documentation
+    and it can be embarrassing and or confusing to have spelling errors in comments.
+
+    There does exist [Test::Spelling::Comment](https://metacpan.org/pod/Test::Spelling::Comment), but if you want to check both POD and
+    comments that it two separate checks.  I think it should be one.
+
+- Configurable from a .ini file
+
+    The default plugin for this module is usually reasonable for checking Perl documentation,
+    but if you prefer a more customized approach you can put your configuration in a
+    file, by default called `spellcheck.ini`, which allows you to separate the configuration
+    from the test file.
+
+- Uses new Hunspell format jargon list for Perl
+
+    I elected to not use [Pod::Wordlist](https://metacpan.org/pod/Pod::Wordlist) as a default jargon list for Perl code, because
+    I wanted to take advantage of the more sophisticated Hunspell affix system.  In the
+    long run, I think this will eventually produce better results, but in the short term
+    this modules default Perl jargon dictionary is not as complete (and also probably
+    has fewer false positives) as [Pod::Wordlist](https://metacpan.org/pod/Pod::Wordlist).  It would be trivial to write a plugin
+    for this module to use [Pod::Wordlist](https://metacpan.org/pod/Pod::Wordlist) if you prefer that list of stopwords though.
+
+- Works out of the box on Strawberry and most other platforms
+
+    [Test::Spelling](https://metacpan.org/pod/Test::Spelling) will install if it can't find a spell checker, but it won't be of
+    much use if it can't actually check the spelling of words.  Because of powerful
+    [Alien](https://metacpan.org/pod/Alien) and [Platypus](https://metacpan.org/pod/FFI::Platypus) technologies this module can more reliably
+    install and be useful on more platforms.
+
+The TL;DR is that I am a terrible speller and I prefer a more consistent spell checker, and
+this module fixes a number of frustrations I've had with [Test::Spelling](https://metacpan.org/pod/Test::Spelling) over the years.
 
 # FUNCTIONS
 
@@ -305,6 +385,10 @@ appropriate languages based on the locale.
 - [Test::Spelling](https://metacpan.org/pod/Test::Spelling)
 
     An older spellchecker for POD.
+
+- [Test::Spelling::Comment](https://metacpan.org/pod/Test::Spelling::Comment)
+
+    Tool for checking the spelling of comments.
 
 # AUTHOR
 

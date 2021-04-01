@@ -27,7 +27,93 @@ our @EXPORT = qw ( spell_check spell_check_ini );
 
 =head1 DESCRIPTION
 
- # TODO
+This module is for checking the spelling of program language documentation.  It has built
+in support for Perl (naturally), but provides a plugin API system which should allow it to
+support other languages in the future.  It uses Hunspell at its core.
+
+But why, you ask, when L<Test::Spelling> exists?  Here briefly are some advantages and
+disadvantages of this project relative to the older tester.
+
+=over 4
+
+=item "One true" spelling library and dictionary
+
+L<Test::Spelling> is quite flexible in the spell checker that it uses under the covers,
+which is admirable in that it will work out of the box in a lot of places as long as there
+is a spell checker available.  However this makes it less reliable and consistent.
+This module instead always uses Hunspell (via L<Alien::Hunspell> and L<Text::Hunspell::FFI>),
+and it has a default human language dictionary (which is configurable).  This makes
+it easier to rely on the results of this module, and it means you don't have to add
+stopwords for multiple spell checkers if you develop on multiple platforms with
+different checkers.  The disadvantage of all this is that the install process can be
+longer because it will build Hunspell if you don't have it installed, and it won't use
+the system human language dictionaries.
+
+=item More accurate word splitting
+
+We get this from L<Pod::Simple::Words>, which uses C<\b{wb}> to split words instead of
+C<\b>.  This does also mean that Perls older than 5.22 will never be supported by
+this module or by L<Pod::Simple::Words>, which could be construed as either an advantage
+or disadvantage depending on your deprecation politics.
+
+=item Doesn't have to be for Perl only
+
+The initial implementation is for Perl only, but the L<plugin|Test::SpellCheck::Plugin>
+architecture is designed to be usable for other languages and technologies.
+
+=item Makes suggestions
+
+This module will suggest corrections to words that it finds are misspelled.
+
+=item Groups misspelled
+
+If the same misspelling exists in multiple locations, it will be reported once for
+each word, along with each location, including the line number.  I find this easier
+to manage when making corrections, especially if the appropriate action is to update
+a dist-level dictionary or add a stopword.
+
+=item Can leverage Hunspell tech
+
+You can write your own Hunspell dictionaries, which allows you to use their affix rules
+and for L<Test::SpellCheck> to suggest words from your dictionaries.
+
+=item Checks Perl comments
+
+This module will check the spelling of Perl comments in POD verbatim blocks, and private
+comments inside your scripts and modules.  (The latter can be be turned off, if you
+prefer not to check private comments).  My feeling is that these are both documentation
+and it can be embarrassing and or confusing to have spelling errors in comments.
+
+There does exist L<Test::Spelling::Comment>, but if you want to check both POD and
+comments that it two separate checks.  I think it should be one.
+
+=item Configurable from a .ini file
+
+The default plugin for this module is usually reasonable for checking Perl documentation,
+but if you prefer a more customized approach you can put your configuration in a
+file, by default called C<spellcheck.ini>, which allows you to separate the configuration
+from the test file.
+
+=item Uses new Hunspell format jargon list for Perl
+
+I elected to not use L<Pod::Wordlist> as a default jargon list for Perl code, because
+I wanted to take advantage of the more sophisticated Hunspell affix system.  In the
+long run, I think this will eventually produce better results, but in the short term
+this modules default Perl jargon dictionary is not as complete (and also probably
+has fewer false positives) as L<Pod::Wordlist>.  It would be trivial to write a plugin
+for this module to use L<Pod::Wordlist> if you prefer that list of stopwords though.
+
+=item Works out of the box on Strawberry and most other platforms
+
+L<Test::Spelling> will install if it can't find a spell checker, but it won't be of
+much use if it can't actually check the spelling of words.  Because of powerful
+L<Alien> and L<Platypus|FFI::Platypus> technologies this module can more reliably
+install and be useful on more platforms.
+
+=back
+
+The TL;DR is that I am a terrible speller and I prefer a more consistent spell checker, and
+this module fixes a number of frustrations I've had with L<Test::Spelling> over the years.
 
 =head1 FUNCTIONS
 
@@ -453,6 +539,10 @@ A list of common jargon words used in Perl documentation.
 =item L<Test::Spelling>
 
 An older spellchecker for POD.
+
+=item L<Test::Spelling::Comment>
+
+Tool for checking the spelling of comments.
 
 =back
 
