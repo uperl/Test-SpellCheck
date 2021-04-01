@@ -15,5 +15,12 @@ use Test::SpellCheck;
 $ENV{PERL_FILE_SHAREDIR_DIST} = "Test-SpellCheck=share";
 # develop-only-end
 
-spell_check;
+if(-f 'spellcheck.ini')
+{
+  spell_check_ini;
+}
+else
+{
+  spell_check;
+}
 done_testing;

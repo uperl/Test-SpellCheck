@@ -10,10 +10,12 @@ my %modules;
 my $post_diag;
 
 $modules{$_} = $_ for qw(
+  Config::INI::Reader
   ExtUtils::MakeMaker
   File::Globstar
   File::ShareDir::Dist
   File::ShareDir::Install
+  File::chdir
   PPI
   Path::Tiny
   PerlX::Maybe
