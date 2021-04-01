@@ -144,9 +144,91 @@ my @list = grep { !$hs->check($_ =~ s!/.*$!!r ) } (
     INI
     ini
     filesystem/MS
+    makefile/MS
+    Makefile.PL
+    MakeMaker
+    MSYS2
+    msys
+    MSWin32
+    LDFLAGS
+    Env
+    DLL
+    CentOS
+    
+    m4
+    linux
+    lib/MS
+    libffi
+    http
+    https
+    html
+    gtar
+    fs
+    ffi
+    env
+    dmake
+    dist.ini
+    dir
+    diag
+    cwd
+    CWD
+    cpanm
+    cp
+    cmd.exe
+    cmake
+    CMake
+    cd
+    cflags
+    CFLAGS
+    bzip2
+    Build.PL
+    bz2
+    bsdtar
+    blib
+    autotools
+    autoconf
+    ar
+    alienfile
+    aclocal
+    Zilla
+    XSLoader
+    WriteMakefile
+    perl/MS
+    perl5
+    config
+    os
+    ok
+    nasm
+    msys
+    noexec
     UTF
     utf
     autogenerate/CAVNGSD
+    xz
+    xs
+    x86
+    x64
+    wget
+    vms
+    vcpkg
+    unix
+    toolchain
+    tmp
+    tmpdir
+    sys
+    subtest
+    stderr
+    stdout
+    ssl
+    SSL
+    ParseXS
+    OpenSSL
+    solaris
+    readme
+    postamble
+    pluggable
+    pkgconfig
+    pkgconf
 
     chomp chop chr crypt fc hex index lc lcfirst length oct ord pack q qq reverse rindex sprintf substr tr uc ucfirst y
     m pos qr quotemeta s split study
