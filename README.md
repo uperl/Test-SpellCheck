@@ -339,6 +339,26 @@ skip_sections  = author
 skip_sections  = copyright and license
 ```
 
+The [Perl](https://metacpan.org/pod/Test::SpellCheck::Plugin::Perl) plugin itself is actually implemented
+as a [combo](https://metacpan.org/pod/Test::SpellCheck::Plugin::Combo) plugin, so you could further break
+this up like so:
+
+```
+; spellcheck.ini
+file = bin/*
+file = script/*
+file = lib/**/*.pm
+file = lib/**/*.pod
+
+[Lang::EN::US]
+[PerlWords]
+[PerlPOD]
+skip_sections  = contributors
+skip_sections  = author
+skip_sections  = copyright and license
+[PerlComments]
+```
+
 The intent of putting the configuration is to separate the config from
 the test file, which can be useful in situations where the test file
 is generated, as is common when using [Dist::Zilla](https://metacpan.org/pod/Dist::Zilla).
