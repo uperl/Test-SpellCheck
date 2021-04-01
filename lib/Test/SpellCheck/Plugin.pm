@@ -7,25 +7,62 @@ use 5.026;
 # ABSTRACT: Plugin documentation for Test::SpellCheck
 # VERSION
 
+=head1 SYNOPSIS
+
+ perldoc Test::SpellCheck::Plugin
+
+=head1 DESCRIPTION
+
+This is documents commonly available plugins for L<Test::SpellCheck>.  A number
+of useful recipes in in that documentation.  This provides an index of commonly
+available plugins, as well as documentation for writing your own plugins.
+
 =head1 AVAILABLE PLUGINS
 
 =over 4
 
 =item L<Test::SpellCheck::Plugin::Combo>
 
+The Combo plugin combines one or more other plugins into one.  Because C<spell_check>
+only takes one plugin, this is the usual way to combine functionality from multiple
+plugins.
+
 =item L<Test::SpellCheck::Plugin::Dictionary>
+
+The Dictionary plugin adds additional (non-primary) dictionaries.  This is frequently
+what you want when you have a distribution-level dictionary for local jargon.
 
 =item L<Test::SpellCheck::Plugin::Lang::EN::US>
 
+The C<Lang::EN::US> plugin provides the default dictionary for US English.
+
 =item L<Test::SpellCheck::Plugin::Perl>
+
+The C<Perl> plugin combines a number of Perl related plugins that produce reasonable
+defaults for most distributions.
 
 =item L<Test::SpellCheck::Plugin::PerlPOD>
 
+The C<PerlPOD> plugin checks for spelling errors in POD.
+
 =item L<Test::SpellCheck::Plugin::PerlComment>
+
+The C<PerlComment> plugin checks for spelling errors in Perl comments.
 
 =item L<Test::SpellCheck::Plugin::PerlWords>
 
+The C<PerlWords> plugin provides an additional dictionary with common Perl jargon,
+like "autovivify" and C<gethostbyaddr>.
+
 =item L<Test::SpellCheck::Plugin::PrimaryDictionary>
+
+The C<PrimaryDictionary> provides a primary affix and dictionary pair.  This is useful
+if you want to use a primary dictionary that isn't provided by one of the existing
+plugins.
+
+=item L<Test::SpellCheck::Plugin::Stopwords>
+
+The C<Stopwords> plugin adds global stopwords that will cover all files in your test.
 
 =back
 

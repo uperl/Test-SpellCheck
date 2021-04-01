@@ -1,4 +1,6 @@
-3
-spellcheck.ini
+5
 hunspell
-wb
+PerlPOD
+PerlWords
+PrimaryDictionary
+PerlComment
