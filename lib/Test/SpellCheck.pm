@@ -17,8 +17,6 @@ our @EXPORT = qw ( spell_check spell_check_ini );
 # ABSTRACT: Check spelling of POD and other documents
 # VERSION
 
-=for stopwords spellcheck.ini
-
 =head1 SYNOPSIS
 
  use Test2::V0;
@@ -316,6 +314,9 @@ the default plugin will be used.  This is roughly equivalent to the default:
 The intent of putting the configuration is to separate the config from
 the test file, which can be useful in situations where the test file
 is generated, as is common when using L<Dist::Zilla>.
+
+Note that if you have multiple plugins specified in your C<spellcheck.ini> file,
+B<the order matters>.
 
 =cut
 

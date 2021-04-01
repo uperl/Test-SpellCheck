@@ -215,6 +215,9 @@ The intent of putting the configuration is to separate the config from
 the test file, which can be useful in situations where the test file
 is generated, as is common when using [Dist::Zilla](https://metacpan.org/pod/Dist::Zilla).
 
+Note that if you have multiple plugins specified in your `spellcheck.ini` file,
+**the order matters**.
+
 # CAVEATS
 
 I am (frankly) somewhat uneasy making US English the default language, and requiring
