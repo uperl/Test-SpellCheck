@@ -1,4 +1,4 @@
-use  Test2::V0 -no_srand => 1;
+use Test2::V0 -no_srand => 1;
 use 5.026;
 use Test::SpellCheck::Plugin::PerlWords;
 use Path::Tiny qw( path );

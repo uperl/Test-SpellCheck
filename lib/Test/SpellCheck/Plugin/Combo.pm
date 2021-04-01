@@ -21,9 +21,9 @@ From your test file:
 
  use Test2::V0;
  use Test::SpellCheck;
-
+ 
  spell_check
-   ['Combo', 
+   ['Combo',
      ['Lang::EN::US'],
      ['PerlPOD', skip_sections => 'author'],
      ['PerlComment'],
@@ -87,12 +87,12 @@ equivalent:
    Test::SpellCheck::Plugin::PerlPOD->new(skip_sections => ['foo','bar']),
    Test::SpellCheck::Plugin::PerlComment->new,
  );
-
+ 
  my $plugin = Test::SpellCheck::Plugin::Combo->new(
    ['PerlPOD', skip_sections => ['foo','bar']],
    ['PerlComment'],
  );
-
+ 
  ; spellcheck.ini
  [PerlPOD]
  skip_section = foo
@@ -143,6 +143,19 @@ sub dictionary ($self)
     push @dic, $plugin->dictionary if $plugin->can('dictionary');
   }
   return @dic;
+}
+
+sub stopwords ($self)
+{
+  my %words;
+  foreach my $plugin ($self->{plugins}->@*)
+  {
+    if($plugin->can('stopwords'))
+    {
+      $words{$_} = 1 for $plugin->stopwords;
+    }
+  }
+  return sort keys %words;
 }
 
 sub stream ($self, $filename, $callback)

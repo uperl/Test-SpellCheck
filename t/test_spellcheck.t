@@ -201,4 +201,14 @@ subtest 'ini' => sub {
 
 };
 
+subtest 'global-stopwords' => sub {
+
+  spell_check ['Combo',
+    ['PrimaryDictionary', affix => 'corpus/foo.afx', dictionary => 'corpus/foo.dic' ],
+    ['StopWords', word => 'foo'],
+    ['TestSource', events => [['word',1,'foo']]],
+  ], 'lib/Test/SpellCheck.pm';
+
+};
+
 done_testing;
