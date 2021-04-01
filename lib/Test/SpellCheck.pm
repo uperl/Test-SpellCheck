@@ -297,11 +297,12 @@ found at L<Test::SpellCheck::Plugin>.
 
 sub _default_file { 'bin/* script/* lib/**/*.pm lib/**/*.pod' }
 
+our $VERBOSE = 0;
+
 sub spell_check
 {
   my $plugin;
   my @diag;
-  my @note;
   my $spell;
 
   if(defined $_[0] && is_blessed_ref $_[0])
@@ -324,15 +325,18 @@ sub spell_check
   my @files = sort map { globstar $_ } split(/\s+/, shift // _default_file());
   my $test_name = shift // 'spell check';
 
+  my $ctx = context();
+
   if($plugin->can('primary_dictionary'))
   {
     my($affix, $dic) = $plugin->primary_dictionary;
     $spell = Text::Hunspell::FFI->new($affix, $dic);
-    push @note, "using affix file $affix";
-    push @note, "using dictionary file $dic";
+    $ctx->note("using affix file $affix") if $VERBOSE;
+    $ctx->note("using dictionary file $dic") if $VERBOSE;
   }
   else
   {
+    $ctx->release;
     croak("plugin provides no primary dictionaries");
   }
 
@@ -341,7 +345,7 @@ sub spell_check
     foreach my $dic ($plugin->dictionary)
     {
       $spell->add_dic($dic);
-      push @note, "using dictionary file $dic";
+      $ctx->note("using dictionary file $dic") if $VERBOSE;
     }
   }
 
@@ -357,7 +361,7 @@ sub spell_check
   foreach my $file (@files)
   {
     my %stopwords;
-    push @note, "check $file";
+    $ctx->note("check $file") if $VERBOSE;
     $plugin->stream($file, sub ($type, $fn, $ln, $word) {
       if($type eq 'word')
       {
@@ -392,7 +396,7 @@ sub spell_check
     }) if $plugin->can('stream');
   }
 
-  foreach my $word (keys %bad_words)
+  foreach my $word (sort keys %bad_words)
   {
     my $diag = "Misspelled: $word\n";
     my @suggestions = $spell->suggest($word);
@@ -405,7 +409,6 @@ sub spell_check
     push @diag, $diag;
   }
 
-  my $ctx = context();
   if(@diag)
   {
     $ctx->fail($test_name, @diag);
@@ -414,7 +417,6 @@ sub spell_check
   {
     $ctx->pass($test_name);
   }
-  $ctx->note($_) for @note;
   $ctx->release;
 
   return !scalar @diag;
@@ -444,6 +446,24 @@ the default plugin will be used.  This is roughly equivalent to the default:
  skip_sections  = contributors
  skip_sections  = author
  skip_sections  = copyright and license
+
+The L<Perl|Test::SpellCheck::Plugin::Perl> plugin itself is actually implemented
+as a L<combo|Test::SpellCheck::Plugin::Combo> plugin, so you could further break
+this up like so:
+
+ ; spellcheck.ini
+ file = bin/*
+ file = script/*
+ file = lib/**/*.pm
+ file = lib/**/*.pod
+ 
+ [Lang::EN::US]
+ [PerlWords]
+ [PerlPOD]
+ skip_sections  = contributors
+ skip_sections  = author
+ skip_sections  = copyright and license
+ [PerlComments]
 
 The intent of putting the configuration is to separate the config from
 the test file, which can be useful in situations where the test file
