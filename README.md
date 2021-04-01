@@ -81,9 +81,42 @@ The `$test_name` is an optional test name for the test.
 
 - Add global stopwords for all files
 
+    ```perl
+    spell_check ['Combo', ['Perl'],['StopWords', word => ['foo','bar','baz']]];
     ```
-    # TODO
+
+    Or in your `spellcheck.ini`:
+
     ```
+    [Perl]
+    [StopWords]
+    word = foo
+    word = bar
+    word = baz
+    ```
+
+    The [Test::SpellCheck::Plugin::StopWords](https://metacpan.org/pod/Test::SpellCheck::Plugin::StopWords) plugin adds stopwords for all documents
+    in your test, and is useful for jargon that is relevant to your entire distribution
+    and not just one file.  Contrast with a dist-level dictionary (see next item), which
+    allows you to use Hunspell's affix rules, and for Hunspell to suggest words that come
+    from the dist-level dictionary.
+
+    You can specify the stopwords inline as in the above examples, or use the `file`
+    directive (or both as it happens) to store the stopwords in a separate file:
+
+    ```perl
+    spell_check ['Combo', ['Perl'], ['StopWords', file => 'foo.txt']];
+    ```
+
+    Or in your `spellcheck.ini`:
+
+    ```
+    [Perl]
+    [StopWords]
+    file = foo.txt
+    ```
+
+    If you use this mode, then the stop words should be stored in the file one word per line.
 
 - Add a dist-level dictionary
 

@@ -73,6 +73,21 @@ that only one implements this method.
 This method returns a list of one or more additional dictionaries.  These are useful
 for jargon which doesn't belong in the main human language dictionary.
 
+=head2 stopwords
+
+ sub stopwords ($self)
+ {
+   ...
+   return @words;
+ }
+
+The stopwords method returns a list of words that should not be considered misspelled,
+usually because they are valid jargon within the domain of your distribution.  This
+is different from maintaining an additional dictionary and using the C<dictionary>
+method above because stopwords will never be offered as suggestions.  The stopwords
+provided by this method are also different from the C<stopword> event below in the
+C<stream> method because they apply to all files, rather than just the current one.
+
 =head2 stream
 
  sub stream ($self, $filename, $callback)

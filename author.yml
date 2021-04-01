@@ -16,6 +16,7 @@ pod_coverage:
     - Test::SpellCheck::Plugin::.*#stream
     - Test::SpellCheck::Plugin::.*#primary_dictionary
     - Test::SpellCheck::Plugin::.*#dictionary
+    - Test::SpellCheck::Plugin::.*#stopwords
     - Test::SpellCheck::INI
     - .*#can
 

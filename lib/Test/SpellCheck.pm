@@ -84,7 +84,34 @@ Stopwords specified in this way are local to just the one file.
 
 =item Add global stopwords for all files
 
- # TODO
+ spell_check ['Combo', ['Perl'],['StopWords', word => ['foo','bar','baz']]];
+
+Or in your C<spellcheck.ini>:
+
+ [Perl]
+ [StopWords]
+ word = foo
+ word = bar
+ word = baz
+
+The L<Test::SpellCheck::Plugin::StopWords> plugin adds stopwords for all documents
+in your test, and is useful for jargon that is relevant to your entire distribution
+and not just one file.  Contrast with a dist-level dictionary (see next item), which
+allows you to use Hunspell's affix rules, and for Hunspell to suggest words that come
+from the dist-level dictionary.
+
+You can specify the stopwords inline as in the above examples, or use the C<file>
+directive (or both as it happens) to store the stopwords in a separate file:
+
+ spell_check ['Combo', ['Perl'], ['StopWords', file => 'foo.txt']];
+
+Or in your C<spellcheck.ini>:
+
+ [Perl]
+ [StopWords]
+ file = foo.txt
+
+If you use this mode, then the stop words should be stored in the file one word per line.
 
 =item Add a dist-level dictionary
 
@@ -232,6 +259,13 @@ sub spell_check
     }
   }
 
+  my %global;
+
+  if($plugin->can('stopwords'))
+  {
+    $global{$_} = 1 for $plugin->stopwords;
+  }
+
   my %bad_words;
 
   foreach my $file (@files)
@@ -243,6 +277,7 @@ sub spell_check
       {
         foreach my $word (split /_/, $word)
         {
+          return if $global{$word};
           return if $stopwords{$word};
           return if $spell->check($word);
           push $bad_words{$word}->@*, [$fn,$ln];
@@ -316,7 +351,7 @@ the default plugin will be used.  This is roughly equivalent to the default:
  file = script/*
  file = lib/**/*.pm
  file = lib/**/*.pod
-
+ 
  [Perl]
  lang           = en-us
  check_comments = 1
@@ -368,7 +403,11 @@ sub spell_check_ini ($filename='spellcheck.ini', $test_name=undef)
   {
     @plugin = ([Combo => @config]);
   }
-  spell_check @plugin, $file, $test_name;
+  my $ctx = context();
+  my $ret = spell_check @plugin, $file, $test_name;
+  $ctx->release;
+
+  $ret;
 }
 
 1;
