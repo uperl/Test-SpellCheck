@@ -45,7 +45,7 @@ subtest 'basic fail' => sub {
 
 subtest 'self' => sub {
 
-  spell_check;
+  spell_check_ini;
 
 };
 

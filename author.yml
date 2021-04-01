@@ -17,5 +17,6 @@ pod_coverage:
     - Test::SpellCheck::Plugin::.*#primary_dictionary
     - Test::SpellCheck::Plugin::.*#dictionary
     - Test::SpellCheck::INI
+    - .*#can
 
 
