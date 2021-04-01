@@ -9,6 +9,7 @@ use Test::SpellCheck::Plugin::PerlWords;
 use base qw( Test::SpellCheck::Plugin::Combo );
 use Carp qw( croak );
 use PerlX::Maybe;
+use Ref::Util qw( is_plain_arrayref );
 use experimental qw( signatures );
 
 our @CARP_NOT = qw( Test::SpellCheck );
@@ -33,9 +34,17 @@ our @CARP_NOT = qw( Test::SpellCheck );
 sub new ($class, %args)
 {
   my $lang_class;
+  my @lang_args;
+
   if(defined $args{lang})
   {
-    if($args{lang} =~ /^([a-z]{2})-([a-z]{2})$/i)
+    if(is_plain_arrayref $args{lang})
+    {
+      $lang_class = 'Test::SpellCheck::Plugin::PrimaryDictionary';
+      my($affix, $dic) = $args{lang}->@*;
+      @lang_args = (affix => $affix, dictionary => $dic);
+    }
+    elsif($args{lang} =~ /^([a-z]{2})-([a-z]{2})$/i)
     {
       $lang_class = join '::', 'Test::SpellCheck::Plugin::Lang', uc $1, uc $2;
     }
@@ -52,7 +61,7 @@ sub new ($class, %args)
   load $lang_class;
 
   my @plugins = (
-    $lang_class->new,
+    $lang_class->new(@lang_args),
     Test::SpellCheck::Plugin::PerlWords->new,
     Test::SpellCheck::Plugin::PerlPOD->new(
       maybe skip_sections => $args{skip_sections},

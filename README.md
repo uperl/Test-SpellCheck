@@ -87,9 +87,24 @@ The `$test_name` is an optional test name for the test.
 
 - Add a dist-level dictionary
 
+    ```perl
+    spell_check ['Combo', ['Perl'],['Dictionary', dictionary => 'spellcheck.dic']];
     ```
-    # TODO
+
+    Or in `spellcheck.ini`:
+
     ```
+    [Perl]
+    [Dictionary]
+    dictionary = spellcheck.dic
+    ```
+
+    The [Test::SpellCheck::Plugin::Dictionary](https://metacpan.org/pod/Test::SpellCheck::Plugin::Dictionary) plugin is for adding additional dictionaries,
+    which can be in arbitrary filesystem locations, including inside your Perl distribution.
+    The [hunspell(5)](http://man.he.net/man5/hunspell) man page can provide detailed information about the format of this
+    file.  The advantage of maintaining your own dictionary file is that [Test::SpellCheck](https://metacpan.org/pod/Test::SpellCheck)
+    can suggest words from your own dictionary.  You can also take advantage of the affix
+    codes for your language.
 
 - Don't spellcheck comments
 

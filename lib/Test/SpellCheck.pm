@@ -88,7 +88,20 @@ Stopwords specified in this way are local to just the one file.
 
 =item Add a dist-level dictionary
 
- # TODO
+ spell_check ['Combo', ['Perl'],['Dictionary', dictionary => 'spellcheck.dic']];
+
+Or in C<spellcheck.ini>:
+
+ [Perl]
+ [Dictionary]
+ dictionary = spellcheck.dic
+
+The L<Test::SpellCheck::Plugin::Dictionary> plugin is for adding additional dictionaries,
+which can be in arbitrary filesystem locations, including inside your Perl distribution.
+The L<hunspell(5)> man page can provide detailed information about the format of this
+file.  The advantage of maintaining your own dictionary file is that L<Test::SpellCheck>
+can suggest words from your own dictionary.  You can also take advantage of the affix
+codes for your language.
 
 =item Don't spellcheck comments
 

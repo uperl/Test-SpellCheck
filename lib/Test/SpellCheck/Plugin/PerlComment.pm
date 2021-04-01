@@ -6,7 +6,7 @@ use 5.026;
 use PPI;
 use experimental qw( signatures );
 
-# ABSTRACT: Test::SpellCheck for checking spelling in Perl comments
+# ABSTRACT: Test::SpellCheck plugin for checking spelling in Perl comments
 # VERSION
 
 =head1 OPTIONS

@@ -13,6 +13,8 @@ use 5.026;
 
 =item L<Test::SpellCheck::Plugin::Combo>
 
+=item L<Test::SpellCheck::Plugin::Dictionary>
+
 =item L<Test::SpellCheck::Plugin::Lang::EN::US>
 
 =item L<Test::SpellCheck::Plugin::Perl>
@@ -20,6 +22,10 @@ use 5.026;
 =item L<Test::SpellCheck::Plugin::PerlPOD>
 
 =item L<Test::SpellCheck::Plugin::PerlComment>
+
+=item L<Test::SpellCheck::Plugin::PerlWords>
+
+=item L<Test::SpellCheck::Plugin::PrimaryDictionary>
 
 =back
 

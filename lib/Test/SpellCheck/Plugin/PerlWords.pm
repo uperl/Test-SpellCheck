@@ -7,7 +7,7 @@ use experimental qw( signatures );
 use File::ShareDir::Dist qw( dist_share );
 use Path::Tiny qw( path );
 
-# ABSTRACT: Test::SpellCheck for checking spelling in Perl comments
+# ABSTRACT: Test::SpellCheck plugin that adds Perl jargon words
 # VERSION
 
 =head1 OPTIONS
