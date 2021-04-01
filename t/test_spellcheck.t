@@ -224,6 +224,57 @@ subtest 'no-primary-dictionary' => sub {
 
 };
 
+subtest 'good-word only' => sub {
+  local $Test::SpellCheck::VERBOSE = 0;
+
+  my $mock = mock 'Text::Hunspell::FFI' => (
+    override => [
+      check => sub ($self, $word) {
+        return 1;
+      },
+    ],
+  );
+
+  is
+    intercept {
+      spell_check ['Combo',
+        ['PrimaryDictionary', affix => 'corpus/foo.afx', dictionary => 'corpus/foo.dic' ],
+        ['TestSource', events => [
+          ['word',1,'foo'],
+          ['word',2,'bar'],
+          ['word',3,'baz'],
+        ]],
+      ], 'lib/Test/SpellCheck.pm';
+    },
+    array {
+      event Pass => sub {
+        call name => 'spell check';
+      };
+      end;
+    },
+  ;
+
+  is
+    intercept {
+      spell_check ['Combo',
+        ['PrimaryDictionary', affix => 'corpus/foo.afx', dictionary => 'corpus/foo.dic' ],
+        ['TestSource', events => [
+          ['word',1,'foo'],
+          ['word',2,'bar'],
+          ['word',3,'baz'],
+        ]],
+      ], 'lib/Test/SpellCheck.pm', 'alt-name';
+    },
+    array {
+      event Pass => sub {
+        call name => 'alt-name';
+      };
+      end;
+    },
+  ;
+
+};
+
 subtest 'bad-word / error' => sub {
 
   local $Test::SpellCheck::VERBOSE = 0;
