@@ -45,6 +45,9 @@ my @list = grep { !$hs->check($_ =~ s!/.*$!!r ) } (
     txt
     pl
     subclass
+    subclasses
+    substage/MS
+    subplugin/MS
     TIMTOWTDI
     stty
     stdio
@@ -154,7 +157,7 @@ my @list = grep { !$hs->check($_ =~ s!/.*$!!r ) } (
     Env
     DLL
     CentOS
-    
+    unstaged
     m4
     linux
     lib/MS
@@ -229,6 +232,24 @@ my @list = grep { !$hs->check($_ =~ s!/.*$!!r ) } (
     pluggable
     pkgconfig
     pkgconf
+    unsetting
+    unsets
+    unescaped
+    toolset/MS
+    tempdir
+    tar.gz
+    tar.xz
+    tar.bz2
+    site.config
+    shellwords
+    realclean
+    distclean
+    rmtree
+    ptar
+    prereq/MS
+    closedir
+    pcfiledir
+    mingw
 
     chomp chop chr crypt fc hex index lc lcfirst length oct ord pack q qq reverse rindex sprintf substr tr uc ucfirst y
     m pos qr quotemeta s split study
