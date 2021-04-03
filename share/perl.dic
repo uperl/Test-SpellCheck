@@ -1,4 +1,4 @@
-553
+570
 ACL
 AUTOLOAD
 ActivePerl
@@ -113,6 +113,7 @@ diag
 dir
 dirname
 dist.ini
+distclean
 dmake
 dualvar
 dzil
@@ -457,7 +458,9 @@ pkgconfig
 pluggable
 pos
 postamble
+prereq/MS
 printf
+ptar
 ptr
 qq
 qsort
@@ -470,12 +473,14 @@ readlink
 readme
 readonly
 readpipe
+realclean
 recv
 refaddr
 reftype
 rewinddir
 rindex
 rmdir
+rmtree
 seekdir
 semctl
 semget
@@ -491,10 +496,12 @@ setpwent
 setservent
 setsockopt
 setuid
+shellwords
 shmctl
 shmget
 shmread
 shmwrite
+site.config
 socketpair
 solaris
 sprintf
@@ -506,6 +513,8 @@ stdout
 stopword/MS
 stringify
 stty
+subplugin/MS
+substage/MS
 substr
 subtest
 sum0
@@ -516,11 +525,15 @@ sysopen
 sysread
 sysseek
 syswrite
+tar.gz
+tar.xz
 tcsh
 telldir
+tempdir
 tmp
 tmpdir
 toolchain
+toolset/MS
 txt
 typeglob
 uc
@@ -528,6 +541,7 @@ ucfirst
 uid
 umask
 undef
+unescaped
 uniq
 uniqint
 uniqnum
@@ -535,7 +549,10 @@ uniqstr
 unix
 unlink
 unpairs
+unsets
+unsetting
 unshift
+unstaged
 unweaken
 url
 utf
