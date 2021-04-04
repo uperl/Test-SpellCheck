@@ -404,6 +404,10 @@ sub spell_check
       {
         # TODO
       }
+      elsif($type eq 'man_link')
+      {
+        # TODO
+      }
       elsif($type eq 'error')
       {
         push @diag, $word;

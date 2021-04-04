@@ -17,6 +17,7 @@ $modules{$_} = $_ for qw(
   File::ShareDir::Install
   File::chdir
   PPI
+  PPI::Document
   Path::Tiny
   PerlX::Maybe
   PerlX::Maybe::XS
