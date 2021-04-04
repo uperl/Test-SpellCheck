@@ -396,6 +396,10 @@ sub spell_check
       {
         # TODO
       }
+      elsif($type eq 'name')
+      {
+        # TODO
+      }
       elsif($type eq 'url_link')
       {
         # TODO

@@ -18,6 +18,7 @@ $modules{$_} = $_ for qw(
   File::chdir
   PPI
   PPI::Document
+  PPIx::DocumentName
   Path::Tiny
   PerlX::Maybe
   PerlX::Maybe::XS
