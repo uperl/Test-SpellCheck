@@ -298,12 +298,27 @@ found at L<Test::SpellCheck::Plugin>.
 sub _default_file { 'bin/* script/* lib/**/*.pm lib/**/*.pod' }
 
 our $VERBOSE = 0;
+state $ppi_cache;
 
 sub spell_check
 {
   my $plugin;
   my @diag;
   my $spell;
+
+  if(defined $ENV{TEST_SPELLCHECK_PPI_CACHE})
+  {
+    unless(defined $ppi_cache)
+    {
+      my($class, @args) = split / /, $ENV{TEST_SPELLCHECK_PPI_CACHE};
+      my $pm = "$class.pm";
+      $pm =~ s{::}{/}g;
+      require PPI::Document;
+      require $pm;
+      $ppi_cache = $class->new(@args);
+      PPI::Document->set_cache($ppi_cache);
+    }
+  }
 
   if(defined $_[0] && is_blessed_ref $_[0])
   {
