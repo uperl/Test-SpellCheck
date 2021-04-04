@@ -130,7 +130,7 @@ C<stream> method because they apply to all files, rather than just the current o
  sub stream ($self, $filename, $callback)
  {
    ...
-   $callback->( $type, $event_filename, $line_number, $text);
+   $callback->( $type, $event_filename, $line_number, $item);
    ...
  }
 
@@ -139,13 +139,13 @@ it calls the C<$callback> with exactly four values.  The C<$type> is one of the 
 types listed below.  The C<$event_filename> is the filename the event was found in.  This
 will often be the same as C<$filename>, but it could be other file if the source file
 that you are reading supports including other source files.  The C<$line_number> is the
-line that event was found at.  The C<$text> depends on the C<$type>.
+line that event was found at.  The C<$item> depends on the C<$type>.
 
 =over 4
 
 =item word
 
-Regular human language word that should be checked for spelling C<$text> is the word.
+Regular human language word that should be checked for spelling C<$item> is the word.
 If one or more words from this event type are misspelled then the L<Test::SpellCheck>
 test will fail.
 
@@ -163,17 +163,31 @@ the locally installed modules.
 
 =item url_link
 
+ my($url, $fragment) = @$item;
+
 A regular internet URL link.  Another plugin may check to make sure this does not
-C<500> or C<404>.
+C<500> or C<404>.  The C<$url> is the URL without the fragment / section.  The
+C<$fragment> is the fragment, or C<undef> if there isn't one.
 
 =item pod_link
 
+ my($pod_name, $section) = @$item;
+
 A link to a module.  For Perl this will be of the form C<Foo::Bar> or C<perldelta>.  Another
-plugin may check to make sure this is a valid module.
+plugin may check to make sure this is a valid module.  The C<$pod_name> is the name of
+the POD to link to, which can be C<undef> for links inside the current document.
+The C<$section> is the section to link to or C<undef> for links to the document as a whole.
+
+=item man_link
+
+ my($man_name, $section) = @$item;
+
+A link to a man page.  The C<$man_name> is the name of the man page to link to.  The C<$section>
+is an optional section, which will be C<undef> if linking the document as a whole.
 
 =item error
 
-An error happened while parsing the source file.  The error message will be in C<$text>.
+An error happened while parsing the source file.  The error message will be in C<$item>.
 If L<Test::SpellCheck> sees this event then it will fail the file.
 
 =back
