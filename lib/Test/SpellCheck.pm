@@ -398,13 +398,20 @@ sub spell_check
       }
       elsif($type eq 'url_link')
       {
+        my($url, $fragment) = @$word;
         # TODO
       }
       elsif($type eq 'pod_link')
       {
+        my($name, $section) = @$word;
         # TODO
       }
       elsif($type eq 'man_link')
+      {
+        my($name, $section) = @$word;
+        # TODO
+      }
+      elsif($type eq 'section')
       {
         # TODO
       }
