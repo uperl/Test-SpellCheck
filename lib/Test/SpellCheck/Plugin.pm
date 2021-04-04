@@ -155,6 +155,12 @@ Word that should not be considered misspelled for the current C<$filename>.  Thi
 for technical jargon which is spelled correctly but not in the regular human language
 dictionary.
 
+=item name
+
+The name of the current document.  For Perl this would be determined by something
+like L<PPIx::DocumentName> which looks for a C<package> statement or a comment to
+indicate the name.  This event should normally only appear once per file.
+
 =item module
 
 a module.  For Perl this will be of the form C<Foo::Bar>.  These are "words" that another

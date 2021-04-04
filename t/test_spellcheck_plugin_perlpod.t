@@ -223,4 +223,28 @@ subtest 'no skip-sections' => sub {
 
 };
 
+subtest 'name' => sub {
+
+  my $plugin = Test::SpellCheck::Plugin::PerlPOD->new(
+    skip_sections => [],
+  );
+
+  my $file = file( 'Foo.pod' => <<~'PERL' );
+    package Foo::Bar;
+    PERL
+
+  my @events;
+
+  $plugin->stream("$file", sub ($type, $fn, $ln, $word) {
+    return unless $type eq 'name';
+    push @events,  [$type, $ln, $word];
+  });
+
+  is
+    \@events,
+    [[ 'name', undef, 'Foo::Bar' ]],
+  ;
+
+};
+
 done_testing;

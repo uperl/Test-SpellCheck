@@ -6,6 +6,8 @@ use 5.026;
 use Pod::Simple::Words;
 use experimental qw( signatures );
 use Ref::Util qw( is_plain_arrayref );
+use PPI::Document;
+use PPIx::DocumentName;
 
 # ABSTRACT: Test::SpellCheck plugin for checking spelling in POD
 # VERSION
@@ -64,10 +66,21 @@ sub new ($class, %args)
 
 sub stream ($self, $filename, $callback)
 {
-  my $parser = Pod::Simple::Words->new;
-  $parser->callback($callback);
-  $parser->skip_sections($self->{skip_sections}->@*);
-  $parser->parse_file($filename);
+  {
+    my $ppi = PPI::Document->new($filename);
+    my $name = PPIx::DocumentName->extract($ppi);
+    if(defined $name)
+    {
+      $callback->('name', $filename, undef, $name);
+    }
+  }
+
+  {
+    my $parser = Pod::Simple::Words->new;
+    $parser->callback($callback);
+    $parser->skip_sections($self->{skip_sections}->@*);
+    $parser->parse_file($filename);
+  }
   return $self;
 }
 
