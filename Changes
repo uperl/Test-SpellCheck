@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}},
 
 {{$NEXT}}
+  - Plugin spec enhacements.
 
 0.01      2021-04-01 16:20:29 -0600
   - initial version

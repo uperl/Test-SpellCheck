@@ -191,6 +191,10 @@ The C<$section> is the section to link to or C<undef> for links to the document 
 A link to a man page.  The C<$man_name> is the name of the man page to link to.  The C<$section>
 is an optional section, which will be C<undef> if linking the document as a whole.
 
+=item section
+
+The title of a section in the current document.
+
 =item error
 
 An error happened while parsing the source file.  The error message will be in C<$item>.
