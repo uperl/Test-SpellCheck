@@ -5,7 +5,6 @@ use lib 't/lib';
 use Path::Tiny qw( path );
 use Test::SourceFile;
 use Test::SpellCheck::Plugin::Perl;
-use YAML qw( Dump );
 
 subtest 'combo' => sub {
 
@@ -49,7 +48,7 @@ subtest 'combo' => sub {
       five        => [['Foo.pm', 12]],
       six         => [['Foo.pm', 16]],
     },
-  or diag Dump(\%words);
+  ;
 
 };
 
@@ -103,7 +102,7 @@ subtest 'skip-section' => sub {
       five        => [['Foo.pm', 18]],
       six         => [['Foo.pm', 22]],
     },
-  or diag Dump(\%words);
+  ;
 
 };
 
@@ -171,7 +170,7 @@ subtest 'do not check comments' => sub {
       description => [['Foo.pm', 3]],
       one         => [['Foo.pm', 5]],
     },
-  or diag Dump(\%words);
+  ;
 
 };
 

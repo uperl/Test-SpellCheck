@@ -30,7 +30,6 @@ $modules{$_} = $_ for qw(
   Test::SpellCheck::Plugin::Lang::EN::US
   Text::Hunspell::FFI
   URI
-  YAML
 );
 
 
