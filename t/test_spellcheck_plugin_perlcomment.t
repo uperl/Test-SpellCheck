@@ -6,7 +6,6 @@ use lib 't/lib';
 use Path::Tiny qw( path );
 use Test::SourceFile;
 use Test::SpellCheck::Plugin::PerlComment;
-use YAML qw( Dump );
 
 subtest 'basic' => sub {
 
@@ -33,7 +32,7 @@ subtest 'basic' => sub {
       one => [['Foo.pm', 3]],
       two => [['Foo.pm', 4]],
     },
-  or diag Dump(\%words);
+  ;
 
 };
 
@@ -73,7 +72,7 @@ subtest 'ignore POD' => sub {
       one => [['Foo.pm', 3]],
       two => [['Foo.pm', 16]],
     },
-  or diag Dump(\%words);
+  ;
 
 };
 
