@@ -40,7 +40,6 @@ subtest 'basic' => sub {
 subtest 'ignore POD' => sub {
 
   my $plugin = Test::SpellCheck::Plugin::PerlComment->new;
-  isa_ok 'Test::SpellCheck::Plugin::PerlComment';
 
   my $file = file( 'Foo.pm' => <<~'PERL' );
     #!/usr/bin/perl
@@ -76,6 +75,35 @@ subtest 'ignore POD' => sub {
     },
   or diag Dump(\%words);
 
+};
+
+subtest 'urls' => sub {
+
+  my $plugin = Test::SpellCheck::Plugin::PerlComment->new;
+
+  my $file = file( 'Foo.pm' => <<~'PERL' );
+    #!/usr/bin/perl
+
+    # https://foo.test#fragment
+    # https://bar.test
+    # mailto:plicease@cpan.org
+    PERL
+
+  my @urls;
+
+  $plugin->stream("$file", sub ($type, $fn, $ln, $word) {
+    return unless $type eq 'url_link';
+    push @urls, [$ln,$word];
+  });
+
+  is
+    \@urls,
+    [
+      [ 3, [ 'https://foo.test',         'fragment' ] ],
+      [ 4, [ 'https://bar.test',         undef      ] ],
+      [ 5, [ 'mailto:plicease@cpan.org', undef      ] ],
+    ],
+  ;
 };
 
 done_testing;
