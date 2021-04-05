@@ -69,12 +69,6 @@ sub stream ($self, $filename, $callback)
         $row[3]->[0] = "$url";
         $callback->(@row);
       }
-      elsif($frag =~ m{^/(usr|home|opt|)/}
-      ||    $frag =~ m{^[a-z]:[\\/]}
-      ||    $frag =~ m{\.(html|pl|pm|pod|c|h|py|tar|gz|xz|zip|bz2)})
-      {
-        # ignore things that look like unix or windows paths or filenames
-      }
       else
       {
         foreach my $word (split /\b{wb}/, $frag)
