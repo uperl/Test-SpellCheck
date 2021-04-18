@@ -229,6 +229,7 @@ subtest 'name' => sub {
   );
 
   my $file = file( 'Foo.pod' => <<~'PERL' );
+    # something?
     package Foo::Bar;
     PERL
 
@@ -241,7 +242,7 @@ subtest 'name' => sub {
 
   is
     \@events,
-    [[ 'name', undef, 'Foo::Bar' ]],
+    [[ 'name', 2, 'Foo::Bar' ]],
   ;
 
 };

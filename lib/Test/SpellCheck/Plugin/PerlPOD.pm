@@ -7,7 +7,7 @@ use Pod::Simple::Words;
 use experimental qw( signatures );
 use Ref::Util qw( is_plain_arrayref );
 use PPI::Document;
-use PPIx::DocumentName;
+use PPIx::DocumentName 1.00 -api => 1;
 
 # ABSTRACT: Test::SpellCheck plugin for checking spelling in POD
 # VERSION
@@ -68,10 +68,10 @@ sub stream ($self, $filename, $callback)
 {
   {
     my $ppi = PPI::Document->new($filename);
-    my $name = PPIx::DocumentName->extract($ppi);
-    if(defined $name)
+    my $result = PPIx::DocumentName->extract($ppi);
+    if(defined $result)
     {
-      $callback->('name', $filename, undef, $name);
+      $callback->('name', $filename, $result->node->location->[0], $result->name);
     }
   }
 
