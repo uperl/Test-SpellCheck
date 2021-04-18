@@ -41,7 +41,7 @@ jobs:
         uses: egor-tensin/setup-cygwin@v3
         with:
           platform: x64
-          packages: make perl gcc-core gcc-g++ pkg-config libcrypt-devel libssl-devel git libhunspell1.7_0 libffi-devel
+          packages: make perl gcc-core gcc-g++ pkg-config libcrypt-devel libssl-devel git libhunspell1.7_0 libffi-devel curl
 
       - name: perl -V
         run: |
@@ -67,7 +67,10 @@ jobs:
           export PATH="/cygdrive/c/cx/bin:$PATH"
           cd $( cygpath -u $GITHUB_WORKSPACE )
           yes | cpan App::cpanminus || true
-          cpanm -n https://dist.wdlabs.com/Pod-Simple-Words-0.05.tar.gz
+          curl -LO https://dist.wdlabs.com/Text-HumanComputerWords-0.02.tar.gz
+          cpanm -n Text-HumanComputerWords-0.02.tar.gz
+          rm -f Text-HumanComputerWords-0.02.tar.gz
+          cpanm -n https://dist.wdlabs.com/Pod-Simple-Words-0.06.tar.gz
           cpanm -n https://dist.wdlabs.com/Test-SpellCheck-Plugin-Lang-EN-US-0.01.tar.gz
           cpanm -n Dist::Zilla
           perl -S dzil authordeps --missing | perl -S cpanm -n

@@ -169,11 +169,8 @@ the locally installed modules.
 
 =item url_link
 
- my($url, $fragment) = @$item;
-
 A regular internet URL link.  Another plugin may check to make sure this does not
-C<500> or C<404>.  The C<$url> is the URL without the fragment / section.  The
-C<$fragment> is the fragment, or C<undef> if there isn't one.
+C<500> or C<404>.  
 
 =item pod_link
 
