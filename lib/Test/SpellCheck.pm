@@ -402,7 +402,6 @@ sub spell_check
       }
       elsif($type eq 'url_link')
       {
-        my($url, $fragment) = @$word;
         # TODO
       }
       elsif($type eq 'pod_link')

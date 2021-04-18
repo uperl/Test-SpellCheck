@@ -59,14 +59,7 @@ sub stream ($self, $filename, $callback)
       elsif($frag =~ /^[a-z]+:\/\//i
       || $frag =~ /^(file|ftps?|gopher|https?|ldapi|ldaps|mailto|mms|news|nntp|nntps|pop|rlogin|rtsp|sftp|snew|ssh|telnet|tn3270|urn|wss?):\S/i)
       {
-        my @row = ( 'url_link', "$filename", $comment->location->[0], [ undef, undef ] );
-        my $url = URI->new($frag);
-        if(defined $url->fragment)
-        {
-          $row[3]->[1] = $url->fragment;
-          $url->fragment(undef);
-        }
-        $row[3]->[0] = "$url";
+        my @row = ( 'url_link', "$filename", $comment->location->[0], $frag );
         $callback->(@row);
       }
       else

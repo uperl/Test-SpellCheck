@@ -98,9 +98,9 @@ subtest 'urls' => sub {
   is
     \@urls,
     [
-      [ 3, [ 'https://foo.test',         'fragment' ] ],
-      [ 4, [ 'https://bar.test',         undef      ] ],
-      [ 5, [ 'mailto:plicease@cpan.org', undef      ] ],
+      [ 3, 'https://foo.test#fragment' ],
+      [ 4, 'https://bar.test',         ],
+      [ 5, 'mailto:plicease@cpan.org'  ],
     ],
   ;
 };
