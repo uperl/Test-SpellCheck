@@ -282,7 +282,7 @@ subtest 'case convert' => sub {
   my $mock = mock 'Text::Hunspell::FFI' => (
     override => [
       check => sub ($self, $word) {
-        return $word eq 'Microsoft';
+        return $word eq 'Microsoft' || $word =~ /^([Ff]rooble)$/ ? 1 : 0;
       },
       suggest => sub ($self, $word) {
         return $word eq 'microsoft' ? ('Microsoft') : ();
@@ -303,6 +303,40 @@ subtest 'case convert' => sub {
       event Pass => sub {};
       end;
     },
+    'handle lower case proper names boo',
+  ;
+
+  is
+    intercept {
+      spell_check ['Combo',
+        ['PrimaryDictionary', affix => 'corpus/foo.afx', dictionary => 'corpus/foo.dic' ],
+        ['TestSource', events => [
+          ['word', 2, 'FROOBLE'],
+        ]],
+      ], 'lib/Test/SpellCheck.pm';
+    },
+    array {
+      event Pass => sub {};
+      end;
+    },
+    'handle upper case constants',
+  ;
+
+
+  is
+    intercept {
+      spell_check ['Combo',
+        ['PrimaryDictionary', affix => 'corpus/foo.afx', dictionary => 'corpus/foo.dic' ],
+        ['TestSource', events => [
+          ['word', 2, 'MICROSOFT'],
+        ]],
+      ], 'lib/Test/SpellCheck.pm';
+    },
+    array {
+      event Pass => sub {};
+      end;
+    },
+    'handle upper case constants',
   ;
 
 };
