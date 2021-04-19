@@ -1,4 +1,4 @@
-581
+582
 ACL
 AUTOLOAD
 ActivePerl
@@ -210,6 +210,7 @@ m4
 macOS
 makefile/MS
 maxstr
+metacharacter/MS
 mingw
 minstr
 mkdir

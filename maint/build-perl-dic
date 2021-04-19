@@ -47,6 +47,7 @@ my @list = grep { !$hs->check($_ =~ s!/.*$!!r ) } (
     subclass
     subclasses
     substage/MS
+    metacharacter/MS
     subplugin/MS
     TIMTOWTDI
     stty
