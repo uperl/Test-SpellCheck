@@ -183,6 +183,7 @@ my @list = grep { !$hs->check($_ =~ s!/.*$!!r ) } (
     cd
     cflags
     CFLAGS
+    libs
     bzip2
     Build.PL
     bz2
