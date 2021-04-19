@@ -307,7 +307,10 @@ subtest 'bad-word / error' => sub {
         call info => [
           object {
             call details => "Misspelled: bar\n  maybe: xx yy\n  found at lib/Test/SpellCheck.pm line 2.\n";
-          }
+          },
+          object {
+            call details => "total errors: 1";
+          },
         ];
       };
       end;
@@ -333,7 +336,10 @@ subtest 'bad-word / error' => sub {
         call info => [
           object {
             call details => "Misspelled: bar\n  maybe: xx yy\n  found at lib/Test/SpellCheck.pm line 2.\n  found at lib/Test/SpellCheck.pm line 100.\n  found at lib/Test/SpellCheck.pm line 105.\n";
-          }
+          },
+          object {
+            call details => "total errors: 1";
+          },
         ];
       };
       end;
@@ -362,6 +368,9 @@ subtest 'bad-word / error' => sub {
           },
           object {
             call details => "Misspelled: other\n  found at lib/Test/SpellCheck.pm line 10.\n";
+          },
+          object {
+            call details => "total errors: 2";
           },
         ];
       };
@@ -396,6 +405,9 @@ subtest 'bad-word / error' => sub {
           object {
             call details => "Misspelled: other\n  found at lib/Test/SpellCheck.pm line 10.\n";
           },
+          object {
+            call details => "total errors: 3";
+          },
         ];
       };
       end;
@@ -416,6 +428,9 @@ subtest 'bad-word / error' => sub {
         call info => [
           object {
             call details => "an error here";
+          },
+          object {
+            call details => "total errors: 1";
           },
         ];
       };
