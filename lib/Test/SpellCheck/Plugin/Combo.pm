@@ -50,7 +50,7 @@ sub _plugin ($spec)
   {
     my($class, @args) = @$spec;
     $class = "Test::SpellCheck::Plugin::$class";
-    load $class;
+    load $class unless $class->can('new');
     return $class->new(@args);
   }
   elsif(is_blessed_ref $spec)
@@ -154,6 +154,19 @@ sub stopwords ($self)
     }
   }
   return sort keys %words;
+}
+
+sub splitter ($self)
+{
+  my @cpu;
+  foreach my $plugin ($self->{plugins}->@*)
+  {
+    if($plugin->can('splitter'))
+    {
+      push @cpu, $plugin->splitter;
+    }
+  }
+  return @cpu;
 }
 
 sub stream ($self, $filename, $splitter, $callback)

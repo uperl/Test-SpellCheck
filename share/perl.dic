@@ -1,4 +1,4 @@
-570
+576
 ACL
 AUTOLOAD
 ActivePerl
@@ -101,6 +101,7 @@ config
 cp
 cpanm
 cpantester
+cpu
 crlf
 csh
 css
@@ -206,6 +207,7 @@ m4
 macOS
 makefile/MS
 maxstr
+mingw
 minstr
 mkdir
 msgctl
@@ -235,6 +237,7 @@ pairgrep
 pairkeys
 pairmap
 pairvalues
+pcfiledir
 perl
 perl/MS
 perl5
@@ -504,6 +507,7 @@ shmwrite
 site.config
 socketpair
 solaris
+splitter
 sprintf
 sqrt
 srand
@@ -513,6 +517,7 @@ stdout
 stopword/MS
 stringify
 stty
+subclasses
 subplugin/MS
 substage/MS
 substr
@@ -525,6 +530,7 @@ sysopen
 sysread
 sysseek
 syswrite
+tar.bz2
 tar.gz
 tar.xz
 tcsh
