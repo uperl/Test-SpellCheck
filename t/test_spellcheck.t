@@ -275,6 +275,38 @@ subtest 'good-word only' => sub {
 
 };
 
+subtest 'case convert' => sub {
+
+  local $Test::SpellCheck::VERBOSE = 0;
+
+  my $mock = mock 'Text::Hunspell::FFI' => (
+    override => [
+      check => sub ($self, $word) {
+        return $word eq 'Microsoft';
+      },
+      suggest => sub ($self, $word) {
+        return $word eq 'microsoft' ? ('Microsoft') : ();
+      },
+    ],
+  );
+
+  is
+    intercept {
+      spell_check ['Combo',
+        ['PrimaryDictionary', affix => 'corpus/foo.afx', dictionary => 'corpus/foo.dic' ],
+        ['TestSource', events => [
+          ['word', 2, 'microsoft'],
+        ]],
+      ], 'lib/Test/SpellCheck.pm';
+    },
+    array {
+      event Pass => sub {};
+      end;
+    },
+  ;
+
+};
+
 subtest 'bad-word / error' => sub {
 
   local $Test::SpellCheck::VERBOSE = 0;
@@ -282,10 +314,10 @@ subtest 'bad-word / error' => sub {
   my $mock = mock 'Text::Hunspell::FFI' => (
     override => [
       check => sub ($self, $word) {
-        return $word eq 'bar' || $word eq 'other' ? 0 : 1;
+        return $word =~ /^([Bb]ar|[Oo]ther)$/ ? 0 : 1;
       },
       suggest => sub ($self, $word) {
-        return $word eq 'bar' ? ('xx','yy') : ();
+        return $word =~ /^([Bb]ar)$/ ? ('xx','yy') : ();
       },
     ],
   );

@@ -395,6 +395,7 @@ sub spell_check
           return if $global{$word};
           return if $stopwords{$word};
           return if $spell->check($word);
+          return if $spell->check(ucfirst($word));
           push $bad_words{$word}->@*, [$fn,$ln];
         }
       }
