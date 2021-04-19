@@ -5,6 +5,7 @@ use lib 't/lib';
 use Path::Tiny qw( path );
 use Test::SourceFile;
 use Test::SpellCheck::Plugin::Perl;
+use List::Util 1.29 qw( pairs );
 
 subtest 'combo' => sub {
 
@@ -169,6 +170,28 @@ subtest 'do not check comments' => sub {
     {
       description => [['Foo.pm', 3]],
       one         => [['Foo.pm', 5]],
+    },
+  ;
+
+};
+
+subtest 'splitter' => sub {
+
+  my $plugin = Test::SpellCheck::Plugin::PerlWords->new;
+
+  is
+    [pairs( $plugin->splitter )],
+    array {
+      # has at least one element
+      item D();
+
+      # none of the types are path_name,
+      # since we do not support that in core
+      all_items array {
+        item !string('path_name');
+        item D();
+      };
+      etc;
     },
   ;
 
