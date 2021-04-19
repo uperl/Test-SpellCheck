@@ -22,7 +22,7 @@ our @CARP_NOT = qw( Test::SpellCheck );
 In Perl:
 
  # these are the default values for all options.
- spell_check ['Perl', 
+ spell_check ['Perl',
    lang           => 'en-us',
    skip_sections  => ['contributors', 'author', 'copyright and license'],
    check_comments => 1,

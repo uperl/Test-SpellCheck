@@ -21,7 +21,7 @@ Or from C<spellcheck.ini>:
  word = foo
  word = bar
  word = baz
-
+ 
  [StopWords]
  file = mywords.txt
 
