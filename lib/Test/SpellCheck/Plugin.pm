@@ -188,7 +188,7 @@ the locally installed modules.
 =item url_link
 
 A regular internet URL link.  Another plugin may check to make sure this does not
-C<500> or C<404>.  
+C<500> or C<404>.
 
 =item pod_link
 
