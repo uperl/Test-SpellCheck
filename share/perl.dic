@@ -1,4 +1,4 @@
-577
+581
 ACL
 AUTOLOAD
 ActivePerl
@@ -193,7 +193,9 @@ json
 lang
 lc
 lcfirst
+ld
 le
+lib64
 libffi
 libs
 linux
@@ -459,9 +461,11 @@ perlxstut
 perlxstypemap
 pkgconf
 pkgconfig
+plugable
 pluggable
 pos
 postamble
+preload
 prereq/MS
 printf
 ptar

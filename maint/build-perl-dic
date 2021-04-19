@@ -161,6 +161,8 @@ my @list = grep { !$hs->check($_ =~ s!/.*$!!r ) } (
     m4
     linux
     lib/MS
+    lib64
+    ld
     libffi
     http
     https
@@ -253,6 +255,8 @@ my @list = grep { !$hs->check($_ =~ s!/.*$!!r ) } (
     mingw
     splitter
     cpu
+    preload
+    plugable
 
     chomp chop chr crypt fc hex index lc lcfirst length oct ord pack q qq reverse rindex sprintf substr tr uc ucfirst y
     m pos qr quotemeta s split study
