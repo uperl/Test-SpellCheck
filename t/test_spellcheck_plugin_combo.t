@@ -102,7 +102,7 @@ subtest 'stream' => sub {
     my @events;
 
     my $plugin = Test::SpellCheck::Plugin::Combo->new;
-    $plugin->stream('Foo.pm', sub (@event) {
+    $plugin->stream('Foo.pm', splitter(), sub (@event) {
       push @events, \@event;
     });
 
@@ -119,7 +119,7 @@ subtest 'stream' => sub {
       ['TestSource', events => [['word', 3, 'baz']]],
     );
 
-    $plugin->stream('Foo.pm', sub (@event) {
+    $plugin->stream('Foo.pm', splitter(), sub (@event) {
       push @events, \@event;
     });
 

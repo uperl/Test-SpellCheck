@@ -41,36 +41,18 @@ sub new ($class)
   bless {}, $class;
 }
 
-sub stream ($self, $filename, $callback)
+sub stream ($self, $filename, $splitter, $callback)
 {
   my $doc = PPI::Document->new($filename);
   foreach my $comment (($doc->find('PPI::Token::Comment') || [])->@*)
   {
     next if $comment->location->[0] == 1 &&
             "$comment" =~ /^#!/;
-    foreach my $frag (split /\s/, "$comment")
+    foreach my $event ($splitter->split("$comment"))
     {
-      next unless $frag =~ /\w/;
-      if($frag =~ /^[a-z]+::([a-z]+(::[a-z]+)*('s)?)$/i)
-      {
-        my @row = ( 'module', "$filename", $comment->location->[0], $frag );
-        $callback->(@row);
-      }
-      elsif($frag =~ /^[a-z]+:\/\//i
-      || $frag =~ /^(file|ftps?|gopher|https?|ldapi|ldaps|mailto|mms|news|nntp|nntps|pop|rlogin|rtsp|sftp|snew|ssh|telnet|tn3270|urn|wss?):\S/i)
-      {
-        my @row = ( 'url_link', "$filename", $comment->location->[0], $frag );
-        $callback->(@row);
-      }
-      else
-      {
-        foreach my $word (split /\b{wb}/, $frag)
-        {
-          next unless $word =~ /\w/;
-          my @row = ( 'word', "$filename", $comment->location->[0], $word );
-          $callback->(@row);
-        }
-      }
+      my($type, $word) = @$event;
+      my @row = ( $type, "$filename", $comment->location->[0], $word );
+      $callback->(@row);
     }
   }
   return $self;

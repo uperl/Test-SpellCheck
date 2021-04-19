@@ -16,6 +16,7 @@ $modules{$_} = $_ for qw(
   File::ShareDir::Dist
   File::ShareDir::Install
   File::chdir
+  List::Util
   PPI
   PPI::Document
   PPIx::DocumentName
@@ -28,6 +29,7 @@ $modules{$_} = $_ for qw(
   Test2::V0
   Test::Script
   Test::SpellCheck::Plugin::Lang::EN::US
+  Text::HumanComputerWords
   Text::Hunspell::FFI
   URI
 );

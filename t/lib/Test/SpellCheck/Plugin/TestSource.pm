@@ -11,7 +11,7 @@ sub new ($class, %args)
   }, $class;
 }
 
-sub stream ($self, $filename, $callback)
+sub stream ($self, $filename, $, $callback)
 {
   foreach my $event ($self->{events}->@*)
   {

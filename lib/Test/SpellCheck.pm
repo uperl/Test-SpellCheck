@@ -7,9 +7,10 @@ use experimental qw( signatures );
 use Ref::Util qw( is_ref is_blessed_ref is_plain_arrayref );
 use File::Globstar qw( globstar );
 use Test2::API qw( context );
-use Text::Hunspell::FFI;
+use Text::Hunspell::FFI 0.04;
 use Carp qw( croak );
 use Module::Load qw( load );
+use Text::HumanComputerWords 0.02;
 use base qw( Exporter );
 
 our @EXPORT = qw ( spell_check spell_check_ini );
@@ -371,13 +372,18 @@ sub spell_check
     $global{$_} = 1 for $plugin->stopwords;
   }
 
+  my $splitter = Text::HumanComputerWords->new(
+    # TODO: plugin
+    Text::HumanComputerWords->default_perl,
+  );
+
   my %bad_words;
 
   foreach my $file (@files)
   {
     my %stopwords;
     $ctx->note("check $file") if $VERBOSE;
-    $plugin->stream($file, sub ($type, $fn, $ln, $word) {
+    $plugin->stream($file, $splitter, sub ($type, $fn, $ln, $word) {
       if($type eq 'word')
       {
         foreach my $word (split /_/, $word)
