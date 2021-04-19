@@ -8,6 +8,7 @@ pod_spelling_system:
   stopwords:
     - lang
     - PerlWords
+    - splitter
 
 pod_coverage:
   skip: 0
@@ -18,6 +19,7 @@ pod_coverage:
     - Test::SpellCheck::Plugin::.*#primary_dictionary
     - Test::SpellCheck::Plugin::.*#dictionary
     - Test::SpellCheck::Plugin::.*#stopwords
+    - Test::SpellCheck::Plugin::.*#splitter
     - Test::SpellCheck::INI
     - .*#can
 

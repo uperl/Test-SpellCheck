@@ -125,6 +125,22 @@ method above because stopwords will never be offered as suggestions.  The stopwo
 provided by this method are also different from the C<stopword> event below in the
 C<stream> method because they apply to all files, rather than just the current one.
 
+=head2 splitter
+
+ sub splitter ($self)
+ {
+   ...
+   return @cpu;
+ }
+
+This is called to allow the plugin to add computer a computer word specification pairs,
+which allows L<Test::SpellCheck> to identify computer words and pass them to the
+appropriate plugins rather than to Hunspell.  The list C<@cpu> is passed into the
+constructor of L<Text::HumanComputerWords>.  The only allowed types are:
+C<url_link>, C<module>, C<skip>.  Note that as of now C<path_name> is NOT allowed,
+so if you are using the C<default_perl> method then C<path_name> needs to be converted
+to a C<skip>.  (other types may be added in the future; including possibly C<path_name>).
+
 =head2 stream
 
  sub stream ($self, $filename, $splitter, $callback)

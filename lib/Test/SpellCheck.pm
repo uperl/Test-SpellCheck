@@ -329,7 +329,7 @@ sub spell_check
   {
     my($class, @args) = shift->@*;
     $class = "Test::SpellCheck::Plugin::$class";
-    load $class;
+    load $class unless $class->can('new');
     $plugin = $class->new(@args);
   }
   else

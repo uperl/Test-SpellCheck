@@ -5,6 +5,7 @@ use lib 't/lib';
 use Test::SourceFile;
 use Test::SpellCheck::Plugin::Combo;
 use Path::Tiny qw( path );
+use Ref::Util qw( is_plain_coderef );
 
 subtest 'basic' => sub {
 
@@ -90,6 +91,55 @@ subtest 'stopwords' => sub {
     ),
     object {
       call_list stopwords => ['bar','baz','foo','one','two'];
+    },
+  );
+
+};
+
+sub code_returns ($value)
+{
+  return validator(sub (%params) {
+    my $got = $params{got};
+    return 0 unless is_plain_coderef($got);
+    return $got->() eq $value;
+  });
+}
+
+subtest 'splitter' => sub {
+
+  package Test::SpellCheck::Plugin::Splitter1 {
+    sub new ($class) { bless {}, $class }
+
+    sub splitter($self)
+    {
+      return (foo => sub { 'foo' }, bar => sub { 'bar' });
+    }
+  }
+
+  package Test::SpellCheck::Plugin::Splitter2 {
+    sub new ($class) { bless {}, $class }
+
+    sub splitter($self)
+    {
+      return (baz => sub { 'baz' });
+    }
+  }
+
+  is(
+    Test::SpellCheck::Plugin::Combo->new(
+      ['Splitter1'],
+      ['Splitter2'],
+    ),
+    object {
+      call_list splitter => array {
+        item 'foo';
+        item code_returns('foo');
+        item 'bar';
+        item code_returns('bar');
+        item 'baz';
+        item code_returns('baz');
+        end;
+      };
     },
   );
 
