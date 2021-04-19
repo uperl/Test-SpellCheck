@@ -448,6 +448,8 @@ sub spell_check
     push @diag, $diag;
   }
 
+  push @diag, "total errors: @{[ scalar @diag ]}" if @diag > 0;
+
   if(@diag)
   {
     $ctx->fail($test_name, @diag);
