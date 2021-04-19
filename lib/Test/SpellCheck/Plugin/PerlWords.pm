@@ -62,7 +62,7 @@ sub dictionary ($self)
 
 sub splitter ($self)
 {
-  pairmap { $a eq 'path_name' ? ('ignore', $b) : ($a,$b) } Text::HumanComputerWords->default_perl;
+  pairmap { $a eq 'path_name' ? ('skip', $b) : ($a,$b) } Text::HumanComputerWords->default_perl;
 }
 
 1;

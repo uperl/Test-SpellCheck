@@ -425,4 +425,40 @@ subtest 'bad-word / error' => sub {
 
 };
 
+subtest 'fail on bad cpu words' => sub {
+
+  local $Test::SpellCheck::VERBOSE = 0;
+
+  package Test::SpellCheck::Plugin::MySplitter {
+    sub new ($class) { bless {}, $class }
+  }
+
+  my @spec;
+  my $mock = mock 'Test::SpellCheck::Plugin::MySplitter' => (
+    add => [
+      splitter => sub ($self) { return @spec },
+    ],
+  );
+
+
+  local $@ = '';
+  eval { spell_check ['Combo', ['Lang::EN::US'], ['MySplitter'] ] };
+  is $@, '';
+
+  @spec = (foo => sub {0}, bar => sub {0});
+
+  $@ = '';
+  eval { spell_check ['Combo', ['Lang::EN::US'], ['MySplitter'] ] };
+  like "$@", qr/bad splitter types foo bar at/;
+
+  # should also fail, but just want to explicitly make sure
+  # that path_name is disallowed
+  @spec = (path_name => sub {0});
+
+  $@ = '';
+  eval { spell_check ['Combo', ['Lang::EN::US'], ['MySplitter'] ] };
+  like "$@", qr/bad splitter type path_name at/;
+
+};
+
 done_testing;

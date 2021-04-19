@@ -11,6 +11,7 @@ use Text::Hunspell::FFI 0.04;
 use Carp qw( croak );
 use Module::Load qw( load );
 use Text::HumanComputerWords 0.02;
+use List::Util 1.29 qw( pairmap );
 use base qw( Exporter );
 
 our @EXPORT = qw ( spell_check spell_check_ini );
@@ -372,10 +373,13 @@ sub spell_check
     $global{$_} = 1 for $plugin->stopwords;
   }
 
-  my $splitter = Text::HumanComputerWords->new(
-    # TODO: plugin
-    Text::HumanComputerWords->default_perl,
-  );
+  my $splitter = do {
+    my @cpu;
+    @cpu = $plugin->splitter if $plugin->can('splitter');
+    my @bad = pairmap { $a !~ /^(?:url_link|module|skip)$/ ? $a : () } @cpu;
+    croak("bad splitter type@{[ @bad > 1 ? 's' : '' ]} @bad") if @bad;
+    Text::HumanComputerWords->new( @cpu );
+  };
 
   my %bad_words;
 
