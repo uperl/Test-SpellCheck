@@ -445,6 +445,11 @@ subtest 'fail on bad cpu words' => sub {
   eval { spell_check ['Combo', ['Lang::EN::US'], ['MySplitter'] ] };
   is $@, '';
 
+  @spec = ('url_link' => sub {0}, 'module' => sub {0}, 'skip' => sub {0});
+  $@ = '';
+  eval { spell_check ['Combo', ['Lang::EN::US'], ['MySplitter'] ] };
+  is $@, '';
+
   @spec = (foo => sub {0}, bar => sub {0});
 
   $@ = '';
