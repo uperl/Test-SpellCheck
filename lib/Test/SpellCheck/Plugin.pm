@@ -127,19 +127,21 @@ C<stream> method because they apply to all files, rather than just the current o
 
 =head2 stream
 
- sub stream ($self, $filename, $callback)
+ sub stream ($self, $filename, $splitter, $callback)
  {
    ...
    $callback->( $type, $event_filename, $line_number, $item);
    ...
  }
 
-The stream method parses the input file C<$filename> to find events.  For each event,
-it calls the C<$callback> with exactly four values.  The C<$type> is one of the event
-types listed below.  The C<$event_filename> is the filename the event was found in.  This
-will often be the same as C<$filename>, but it could be other file if the source file
-that you are reading supports including other source files.  The C<$line_number> is the
-line that event was found at.  The C<$item> depends on the C<$type>.
+The stream method parses the input file C<$filename> to find events.  The L<$cplitter>
+is an instance of L<Text::HumanCompuer::Words>, or something that implements a C<split>
+method exactly like it does.  For each event, it calls the C<$callback> with exactly
+four values.  The C<$type> is one of the event types listed below.  The C<$event_filename>
+is the filename the event was found in.  This will often be the same as C<$filename>,
+but it could be other file if the source file that you are reading supports including
+other source files.  The C<$line_number> is the line that event was found at.  The
+C<$item> depends on the C<$type>.
 
 =over 4
 

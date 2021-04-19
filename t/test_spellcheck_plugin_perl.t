@@ -32,7 +32,7 @@ subtest 'combo' => sub {
 
   my %words;
 
-  $plugin->stream("$file", sub ($type, $fn, $ln, $word) {
+  $plugin->stream("$file", splitter(), sub ($type, $fn, $ln, $word) {
     return unless $type eq 'word';
     push $words{$word}->@*, [path($fn)->basename,$ln];
   });
@@ -85,7 +85,7 @@ subtest 'skip-section' => sub {
 
   my %words;
 
-  $plugin->stream("$file", sub ($type, $fn, $ln, $word) {
+  $plugin->stream("$file", splitter(), sub ($type, $fn, $ln, $word) {
     return unless $type eq 'word';
     push $words{$word}->@*, [path($fn)->basename,$ln];
   });
@@ -159,7 +159,7 @@ subtest 'do not check comments' => sub {
 
   my %words;
 
-  $plugin->stream("$file", sub ($type, $fn, $ln, $word) {
+  $plugin->stream("$file", splitter(), sub ($type, $fn, $ln, $word) {
     return unless $type eq 'word';
     push $words{$word}->@*, [path($fn)->basename,$ln];
   });

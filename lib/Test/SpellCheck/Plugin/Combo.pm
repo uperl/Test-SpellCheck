@@ -156,11 +156,11 @@ sub stopwords ($self)
   return sort keys %words;
 }
 
-sub stream ($self, $filename, $callback)
+sub stream ($self, $filename, $splitter, $callback)
 {
   foreach my $plugin ($self->{plugins}->@*)
   {
-    $plugin->stream($filename, $callback) if $plugin->can('stream');
+    $plugin->stream($filename, $splitter, $callback) if $plugin->can('stream');
   }
   return $self;
 }

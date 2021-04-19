@@ -21,7 +21,7 @@ subtest 'basic' => sub {
 
   my %words;
 
-  $plugin->stream("$file", sub ($type, $fn, $ln, $word) {
+  $plugin->stream("$file", splitter(), sub ($type, $fn, $ln, $word) {
     return unless $type eq 'word';
     push $words{$word}->@*, [path($fn)->basename,$ln];
   });
@@ -61,7 +61,7 @@ subtest 'ignore POD' => sub {
 
   my %words;
 
-  $plugin->stream("$file", sub ($type, $fn, $ln, $word) {
+  $plugin->stream("$file", splitter(), sub ($type, $fn, $ln, $word) {
     return unless $type eq 'word';
     push $words{$word}->@*, [path($fn)->basename,$ln];
   });
@@ -90,7 +90,7 @@ subtest 'urls' => sub {
 
   my @urls;
 
-  $plugin->stream("$file", sub ($type, $fn, $ln, $word) {
+  $plugin->stream("$file", splitter(), sub ($type, $fn, $ln, $word) {
     return unless $type eq 'url_link';
     push @urls, [$ln,$word];
   });

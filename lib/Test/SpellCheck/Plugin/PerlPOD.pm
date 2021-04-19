@@ -64,7 +64,7 @@ sub new ($class, %args)
   }, $class;
 }
 
-sub stream ($self, $filename, $callback)
+sub stream ($self, $filename, $splitter, $callback)
 {
   {
     my $ppi = PPI::Document->new($filename);
@@ -78,6 +78,7 @@ sub stream ($self, $filename, $callback)
   {
     my $parser = Pod::Simple::Words->new;
     $parser->callback($callback);
+    $parser->splitter($splitter);
     $parser->skip_sections($self->{skip_sections}->@*);
     $parser->parse_file($filename);
   }
