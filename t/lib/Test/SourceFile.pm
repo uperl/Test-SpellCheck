@@ -25,7 +25,7 @@ sub splitter
   state $splitter;
   $splitter ||= do {
     require Text::HumanComputerWords;
-    my @args = pairmap { $a eq 'path_name' ? ('ignore', $b) : ($a,$b) } Text::HumanComputerWords->default_perl;
+    my @args = pairmap { $a eq 'path_name' ? ('skip', $b) : ($a,$b) } Text::HumanComputerWords->default_perl;
     Text::HumanComputerWords->new(@args);
   };
 }
