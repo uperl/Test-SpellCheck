@@ -1,4 +1,4 @@
-582
+583
 ACL
 AUTOLOAD
 ActivePerl
@@ -185,6 +185,7 @@ https
 ini
 inode
 inplace
+interpolator/MS
 invocant
 isdual
 isvstring

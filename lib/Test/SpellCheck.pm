@@ -376,7 +376,7 @@ sub spell_check
   my $splitter = do {
     my @cpu;
     @cpu = $plugin->splitter if $plugin->can('splitter');
-    my @bad = pairmap { $a !~ /^(?:url_link|module|skip)$/ ? $a : () } @cpu;
+    my @bad = pairmap { $a !~ /^(url_link|module|skip)$/n ? $a : () } @cpu;
     croak("bad splitter type@{[ @bad > 1 ? 's' : '' ]} @bad") if @bad;
     Text::HumanComputerWords->new( @cpu );
   };
