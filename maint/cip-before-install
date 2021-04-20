@@ -2,6 +2,6 @@
 
 cip sudo apt-get update
 cip sudo apt-get install libffi-dev libhunspell-dev
-cip exec cpanm -n https://dist.wdlabs.com/Text-HumanComputerWords-0.02.tar.gz
+cip exec cpanm -n https://dist.wdlabs.com/Text-HumanComputerWords-0.03.tar.gz
 cip exec cpanm -n https://dist.wdlabs.com/Pod-Simple-Words-0.06.tar.gz
 cip exec cpanm -n https://dist.wdlabs.com/Test-SpellCheck-Plugin-Lang-EN-US-0.01.tar.gz
