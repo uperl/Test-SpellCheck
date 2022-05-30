@@ -41,7 +41,7 @@ jobs:
         uses: egor-tensin/setup-cygwin@v3
         with:
           platform: x64
-          packages: make perl gcc-core gcc-g++ pkg-config libcrypt-devel libssl-devel git libhunspell1.7_0 libffi-devel curl
+          packages: make perl gcc-core gcc-g++ pkg-config libcrypt-devel libssl-devel git libhunspell1.7_0 libffi-devel curl libarchive-devel
 
       - name: perl -V
         run: |

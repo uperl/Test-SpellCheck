@@ -46,6 +46,7 @@ jobs:
             mingw-w64-x86_64-perl
             mingw-w64-x86_64-hunspell
             mingw-w64-x86_64-libffi
+            mingw-w64-x86_64-libarchive
 
       - name: perl -V
         run: |
