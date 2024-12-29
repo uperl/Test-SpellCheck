@@ -1,8 +1,6 @@
-Test-SpellCheck-*
 /.build/
 *.swp
-
+/.vscode/perl-lang/
 /Test-SpellCheck-*
-/.build
 *.old
 *.orig
