@@ -1,4 +1,4 @@
-# Test::SpellCheck ![static](https://github.com/uperl/Test-SpellCheck/workflows/static/badge.svg) ![linux](https://github.com/uperl/Test-SpellCheck/workflows/linux/badge.svg) ![windows](https://github.com/uperl/Test-SpellCheck/workflows/windows/badge.svg) ![macos](https://github.com/uperl/Test-SpellCheck/workflows/macos/badge.svg) ![msys2-mingw](https://github.com/uperl/Test-SpellCheck/workflows/msys2-mingw/badge.svg)
+# Test::SpellCheck ![static](https://github.com/uperl/Test-SpellCheck/workflows/static/badge.svg) ![linux](https://github.com/uperl/Test-SpellCheck/workflows/linux/badge.svg)
 
 Check spelling of POD and other documents
 
