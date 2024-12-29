@@ -2,4 +2,7 @@ Test-SpellCheck-*
 /.build/
 *.swp
 
-
+/Test-SpellCheck-*
+/.build
+*.old
+*.orig
