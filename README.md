@@ -6,6 +6,7 @@ Check spelling of POD and other documents
 
 ```perl
 use Test2::V0;
+use Test::SpellCheck;
 
 spell_check 'lib/**/*.pm';
 
