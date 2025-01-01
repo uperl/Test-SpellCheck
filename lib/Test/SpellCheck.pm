@@ -22,6 +22,7 @@ our @EXPORT = qw ( spell_check spell_check_ini );
 =head1 SYNOPSIS
 
  use Test2::V0;
+ use Test::SpellCheck;
  
  spell_check 'lib/**/*.pm';
  
